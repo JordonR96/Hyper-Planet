@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://Font/pixel_noir/Pixel-Noir Caps.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Camera2D.tscn" type="PackedScene" id=4]
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_top = 26
+extra_spacing_space = 11
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 25
+extra_spacing_top = 22
+font_data = ExtResource( 2 )
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+y_axis_speed = 5
+rotation_speed = 2.5
+player_start_position = Vector2( 180, 583 )
+camera_start_position = Vector2( 180, 320 )
+rotation_limit = 60
+score_increment = 25.0
+
+[node name="ScoreTimer" type="Timer" parent="."]
+wait_time = 1.75
+
+[node name="StartButton" type="Button" parent="."]
+margin_left = 89.9706
+margin_top = 269.36
+margin_right = 265.971
+margin_bottom = 333.36
+custom_fonts/font = SubResource( 2 )
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+
+[node name="Camera2D" parent="." instance=ExtResource( 4 )]
+position = Vector2( 180, 320.319 )
+
+[node name="ScoreLabel" type="Label" parent="Camera2D"]
+margin_left = -171.515
+margin_top = -307.591
+margin_right = 10.485
+margin_bottom = -262.591
+grow_horizontal = 0
+custom_fonts/font = SubResource( 1 )
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="pressed" from="StartButton" to="." method="_start_game"]
