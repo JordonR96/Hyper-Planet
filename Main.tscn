@@ -21,11 +21,12 @@ font_data = ExtResource( 2 )
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
 y_axis_speed = 5
-rotation_speed = 2.5
+rotation_speed = 2.0
 player_start_position = Vector2( 180, 583 )
 camera_start_position = Vector2( 180, 320 )
-rotation_limit = 60
+rotation_limit = 80
 score_increment = 25.0
+auto_straighten = true
 
 [node name="ScoreTimer" type="Timer" parent="."]
 wait_time = 1.75

@@ -6,6 +6,7 @@ export(Vector2) var player_start_position
 export(Vector2) var camera_start_position
 export(int, 90) var rotation_limit
 export(float) var score_increment
+export(bool) var auto_straighten
 
 var score = 0;
 var playing = false
@@ -44,24 +45,34 @@ func _process(delta):
 
 #handle the inputs
 func handle_inputs(delta, global_rot_degree, global_rot_rad):
-
 	
+	var straightening = false
 	rotation_dir = 0
 	# TODO figure out how tp do touch inputs
 	# should be rotate to x axis of touch, further away form
 	# player the bigger rotation accelaration
-
 	
 	if (Input.is_action_pressed('ui_left')):
 		rotation_dir -= 1
 	elif(Input.is_action_pressed('ui_right')):
 		rotation_dir += 1
+	else:
+		if (auto_straighten and global_rot_degree != 0):
+			#TODO set rotation direction towards
+			rotation_dir = -1 * (global_rot_degree/abs(global_rot_degree))
+			straightening = true
+			## todo consider snapback rotation quicker
+		
 	var rotation_change = rotation_dir * rotation_speed * delta
 	var new_rotation = global_rot_rad +  rotation_change
 
 	var rotation_max = rotation_limit * (PI/180)
 	var rotation_min = - rotation_max
-	$Player.global_rotation = clamp(new_rotation, rotation_min, rotation_max)
+	
+	if (global_rot_rad >= -0.1 and global_rot_rad <= 0.1 and straightening):
+		$Player.global_rotation = 0
+	else:
+		$Player.global_rotation = clamp(new_rotation, rotation_min, rotation_max)
 
 	
 func move_camera(delta):
