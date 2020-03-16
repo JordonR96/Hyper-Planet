@@ -5,7 +5,7 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Camera2D.tscn" type="PackedScene" id=4]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 32
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
@@ -13,7 +13,7 @@ extra_spacing_top = 26
 extra_spacing_space = 11
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 25
 extra_spacing_top = 22
 font_data = ExtResource( 2 )
@@ -35,7 +35,7 @@ margin_left = 89.9706
 margin_top = 269.36
 margin_right = 265.971
 margin_bottom = 333.36
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -52,7 +52,7 @@ margin_top = -307.591
 margin_right = 10.485
 margin_bottom = -262.591
 grow_horizontal = 0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false

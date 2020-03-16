@@ -71,6 +71,8 @@ func move_camera(delta):
 
 
 func move_player(delta, global_rot_degree, global_rot_rad):
+	#TODO tidy the code up
+	# TODO test out auto mooveing player to face forward(have a flag on player)
 	#move the player 
 	# move in x axis based on player rotation
 	var direction = Vector2()
