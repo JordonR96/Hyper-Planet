@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir Caps.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Camera2D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Background.gd" type="Script" id=5]
+[ext_resource path="res://Background.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -24,9 +26,12 @@ y_axis_speed = 5
 rotation_speed = 2.0
 player_start_position = Vector2( 180, 583 )
 camera_start_position = Vector2( 180, 320 )
-rotation_limit = 80
+rotation_limit = 70
 score_increment = 25.0
 auto_straighten = true
+
+[node name="Background" parent="." instance=ExtResource( 6 )]
+script = ExtResource( 5 )
 
 [node name="ScoreTimer" type="Timer" parent="."]
 wait_time = 1.75
@@ -45,7 +50,8 @@ __meta__ = {
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
 [node name="Camera2D" parent="." instance=ExtResource( 4 )]
-position = Vector2( 180, 320.319 )
+position = Vector2( 180, 320 )
+zoom = Vector2( 0.96, 1 )
 
 [node name="ScoreLabel" type="Label" parent="Camera2D"]
 margin_left = -171.515

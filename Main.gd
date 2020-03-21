@@ -62,6 +62,9 @@ func handle_inputs(delta, global_rot_degree, global_rot_rad):
 			rotation_dir = -1 * (global_rot_degree/abs(global_rot_degree))
 			straightening = true
 			## todo consider snapback rotation quicker
+	
+	## TODO acceleration rotation/ rotation speed change with distrance touch
+	# away from play/ touch screen left/right + shoot
 		
 	var rotation_change = rotation_dir * rotation_speed * delta
 	var new_rotation = global_rot_rad +  rotation_change
