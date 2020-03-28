@@ -5,12 +5,7 @@
 [ext_resource path="res://Art/player/spaceship1.png" type="Texture" id=3]
 [ext_resource path="res://Player.gd" type="Script" id=4]
 
-
-
-
-
-
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
@@ -32,16 +27,16 @@ animations = [ {
 extents = Vector2( 30.9246, 30.7635 )
 
 [node name="Player" type="Area2D"]
-visible = false
-position = Vector2( 180, 583.009 )
+position = Vector2( 184.5, 557.009 )
+collision_mask = 14
 script = ExtResource( 4 )
-__meta__ = {
-"_edit_group_": true
-}
+auto_straighten = true
+rotation_speed = 2.0
+rotation_limit = 15
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -0.000106812, 0.565674 )
-frames = SubResource( 3 )
+frames = SubResource( 1 )
 animation = "right"
 playing = true
 
@@ -49,3 +44,8 @@ playing = true
 position = Vector2( 0.353546, 1.76779 )
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+[connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]

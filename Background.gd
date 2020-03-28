@@ -3,77 +3,63 @@ extends TileMap
 # get reference to the tileset
 var Tileset = get_tileset()
 # get out tiles as variables
-var crater = Tileset.find_tile_by_name('crater')
-var river = Tileset.find_tile_by_name('river')
-var block_hole = Tileset.find_tile_by_name('block_hole')
-var path = Tileset.find_tile_by_name('path')
-var background = Tileset.find_tile_by_name('background')
-var background_auto = Tileset.find_tile_by_name('background_auto')
-var screen_size
-var tile_count_x = 14
-var tile_count_y = 24
 var rand_generate = RandomNumberGenerator.new()
-
-
+var tile_count_x
+var tile_count_y
+var tile_resolution
 func _random_number(range_min, range_max):
 	rand_generate.randomize()
 	return rand_generate.randi_range(range_min, range_max)
+	
 	# Returns random integer between 0 and rnage_max
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
 
-	# tiles are 32 * 32 
+func start(bg_tile_count_x, bg_tile_count_y, bg_tile_resolution, start_position):
+	tile_count_x = bg_tile_count_x
+	tile_count_y = bg_tile_count_y
+	tile_resolution = bg_tile_resolution
+	_draw_full_screen()
+	position.x = start_position.x
+	position.y = start_position.y	
 
-	# tiles counts need to fill screen, and y divisible by 2 and 3,
-	# x divisinle by 2
-
-	_draw_full_screen(tile_count_x, tile_count_y)
-
-
-func _draw_full_screen(tile_count_x, tile_count_y ):
+func _draw_full_screen():
 	# modes of generation
 	var modes = ['quarter', 'horizonatal_split', 'vertical_split', 'thirds']
 	# list of available stuctures
-	## TODO need alternate method than draw square for path
-	## more ccomplex spacing  to make sure overlaps dont look weird but works for now
-	## adin crate crater
-	var structures = [ river, background_auto]
-	var structure_info = {
-		crater: 'crater',
-		block_hole: 'block_hole',
-		path: 'path',
-		river: 'river',
-		background_auto: 'background_auto'
-	}
+	var structures = Tileset.get_tiles_ids()
+	var structure_info = {}
+	for id in structures:
+		structure_info[Tileset.tile_get_name(id)] = id
 	
-	_draw_rect(Vector2(0,0), tile_count_x, tile_count_y ,background)
+	# draw_rect(Vector2(0,0), tile_count_x, tile_count_y , 1)
 	var build_mode = modes[_random_number(0, modes.size() -1)]
 	
-	print(_random_number(0, modes.size() -1))
-	# TODO 
+
+
 	# fill screen with background tiles/ bg auto tiles
 	var start = Vector2(0,0)
 	var end = Vector2(tile_count_x, tile_count_y)
-
-	if (build_mode == 'quarter'):
-		
-		_build_screen_quarters(start, end, structures, structure_info)
 	
-	elif (build_mode == 'horizonatal_split'):
-		
-		_build_split_screen(start, end, true, false, structures, structure_info)
-		
-	elif (build_mode == 'vertical_split'):
-		
-		_build_split_screen(start, end, false, true, structures, structure_info)
-		
-	elif (build_mode == 'thirds'):	
-			
-		_build_thirds_screen(start, end, structures, structure_info)
-		
-	# always update bitmask region otherwise auto tile won work
-	update_bitmask_region(Vector2(0,0), Vector2(tile_count_x, tile_count_y))
+	_draw_rect(start, tile_count_x, tile_count_y, structure_info['background'])
+	## TODO this is all too complicated need more simple build routine, butm some code may be useful
+	#	if (build_mode == 'quarter'):
+	#
+	#		_build_screen_quarters(start, end, structures, structure_info)
+	#
+	#	elif (build_mode == 'horizonatal_split'):
+	#
+	#		_build_split_screen(start, end, true, false, structures, structure_info)
+	#
+	#	elif (build_mode == 'vertical_split'):
+	#
+	#		_build_split_screen(start, end, false, true, structures, structure_info)
+	#
+	#	elif (build_mode == 'thirds'):	
+	#
+	#		_build_thirds_screen(start, end, structures, structure_info)
+	#
+	#	# always update bitmask region otherwise auto tile won work
+	#	update_bitmask_region(Vector2(0,0), Vector2(tile_count_x, tile_count_y))
 	
 func _get_quarters(start,end, halfx, halfy):
 	var quarters = []
@@ -211,6 +197,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 	# clear the tiles
 	clear()
 	## draw again
-	_draw_full_screen(tile_count_x, tile_count_y)
-		## move it up
-	position.y = position.y - (tile_count_y * 32 * 2)
+	_draw_full_screen()
+
+	# move it up
+	position.y = position.y - (tile_count_y * tile_resolution * 3)
