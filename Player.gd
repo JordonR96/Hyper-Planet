@@ -85,12 +85,19 @@ func handle_inputs(delta, rotation_degree):
 		if (allow_shoot):
 			## TODO play the shooting animation
 			emit_signal('shoot')
+			$AnimatedSprite.play('shoot') 
+
+
+
 			allow_shoot = false
-			$ShootTimer.start()
+
 	
+
 	if (Input.is_action_pressed('ui_left')):
+
 		rotation_dir -= 1
 	elif(Input.is_action_pressed('ui_right')):
+
 		rotation_dir += 1
 	else:
 		if (auto_straighten and rotation_degree != 0):
@@ -124,6 +131,9 @@ func take_damage(amount):
 	health = health - amount
 
 
-
-func _on_ShootTimer_timeout():
-	allow_shoot = true
+func _on_AnimatedSprite_animation_finished():
+	if ($AnimatedSprite.animation ==  'shoot'):
+		allow_shoot = true
+		
+	if ($AnimatedSprite.animation != 'default'):
+		$AnimatedSprite.animation  = 'default'

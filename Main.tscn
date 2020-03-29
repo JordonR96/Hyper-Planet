@@ -2,16 +2,16 @@
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir Caps.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://LaserBlock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Camera2D.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://Enemy.tscn" type="PackedScene" id=6]
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=1]
 size = 32
 extra_spacing_top = 28
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 size = 32
 font_data = ExtResource( 5 )
 
@@ -26,9 +26,6 @@ y_axis_speed = 250
 player_start_position = Vector2( 180, 583 )
 score_increment = 25.0
 
-[node name="Enemy" parent="." instance=ExtResource( 6 )]
-position = Vector2( 184.87, -1628.4 )
-
 [node name="Camera2D" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 0 )
 anchor_mode = 0
@@ -40,7 +37,7 @@ margin_left = 76.3223
 margin_top = 323.657
 margin_right = 282.322
 margin_bottom = 387.657
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 1 )
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -51,7 +48,7 @@ margin_left = 4.77298
 margin_top = 43.6638
 margin_right = 72.773
 margin_bottom = 57.6638
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -74,6 +71,9 @@ wait_time = 1.75
 [node name="GameOverTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
+
+[node name="Enemy" parent="." instance=ExtResource( 3 )]
+position = Vector2( 181.335, -7.00352 )
 [connection signal="pressed" from="Camera2D/HUD/StartButton" to="." method="_start_game"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 [connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
