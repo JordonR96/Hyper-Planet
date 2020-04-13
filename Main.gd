@@ -19,7 +19,7 @@ export (int) var bg_tile_resolution = 64
 var playerScene = preload("res://Player.tscn")
 var player
 # TODO make this customisable so can have diff bullets?
-var PlayerBulletScene = preload('res://Bullet.tscn')
+var PlayerBulletScene = preload('res://PlayerBullet.tscn')
 
 var Background1Scene = preload("res://Background.tscn")
 var Background2Scene = preload("res://Background.tscn")
@@ -82,6 +82,9 @@ func _start_game():
 	$Camera2D.start(camera_start_position)
 
 func _player_shoot():
+	# TODO get player roatatoin, if player is rotated add a pixel amouun
+	# to lef tor right (depending on rotation direction) so it looks like 
+	# bullets are coming staight from guns
 	var bullet1 = PlayerBulletScene.instance()
 	var bullet2 = PlayerBulletScene.instance()
 	add_child(bullet1)
@@ -119,7 +122,8 @@ func _on_ScoreTimer_timeout():
 	
 	 
 func _game_over():
-	
+
+
 	## stop playing
 	Background1.queue_free()
 	Background2.queue_free()
@@ -128,19 +132,19 @@ func _game_over():
 	# or leave it if it wont break everything
 	## TODO  show whole game over screen
 	$ScoreTimer.stop()
-
-	$GameOverTimer.start(1)
-
-
-
-
-
-func _on_GameOverTimer_timeout():
 	$Camera2D/HUD/ScoreLabel.hide()
 	$Camera2D/HUD/GameOver.show()
-	$Camera2D/HUD/GameOver.text = 'Game Over\nScore: ' + str(score)
+	$Camera2D/HUD/GameOver.text = 'Game Over\n Score: ' + str(score)
 		## TODO emit a signal that all enemies/environment obj have that will cause them to die
 	#will need to connect that on instantiation, will use queue_free() to dleete
 	## TODO  show whole game over screen
 	$Camera2D/HUD/StartButton.show()
 	$Camera2D/HUD/StartButton.text = 'Retry'
+
+
+
+
+
+
+
+	

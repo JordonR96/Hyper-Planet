@@ -30,6 +30,8 @@ func _process(delta):
 
 
 func _on_Bullet_area_entered(area):
+
+	queue_free()
 	if (area.has_method('take_damage')):
 		area.take_damage(damage)
-		queue_free()
+

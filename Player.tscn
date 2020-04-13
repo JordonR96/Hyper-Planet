@@ -1,24 +1,79 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Art/player/spaceship1.png" type="Texture" id=3]
+[ext_resource path="res://Art/player/spaceship.png" type="Texture" id=1]
+[ext_resource path="res://Art/player/ship_explosion.png" type="Texture" id=2]
 [ext_resource path="res://Player.gd" type="Script" id=4]
-[ext_resource path="res://Art/player/spaceship4.png" type="Texture" id=5]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 30.9246, 30.7635 )
 
-[sub_resource type="SpriteFrames" id=3]
-animations = [ {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ) ],
-"loop": false,
-"name": "shoot",
-"speed": 5.0
-} ]
+[sub_resource type="Animation" id=2]
+resource_name = "dead"
+length = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "default"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "explosion"
+
+[sub_resource type="Animation" id=5]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "explosion"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Explosion:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "none"
 
 [node name="Player" type="Area2D"]
 position = Vector2( 184.5, 557.009 )
@@ -33,10 +88,33 @@ rotation_limit = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.54078e-05, -0.176729 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 one_way_collision_margin = 0.0
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 3 )
-playing = true
-[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+method_call_mode = 1
+anims/dead = SubResource( 2 )
+anims/default = SubResource( 3 )
+anims/explosion = SubResource( 4 )
+anims/shoot = SubResource( 5 )
+
+[node name="Explosion" type="Sprite" parent="."]
+z_index = 1
+texture = ExtResource( 2 )
+vframes = 3
+hframes = 4
+frame = 11
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 0.25 )
+texture = ExtResource( 1 )
+vframes = 2
+hframes = 2
+
+[node name="ExplosionPlayer" type="AnimationPlayer" parent="."]
+anims/explosion = SubResource( 6 )
+anims/none = SubResource( 7 )
+[connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_ExplosionPlayer_animation_finished"]
+[connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_AnimationPlayer2_animation_finished"]

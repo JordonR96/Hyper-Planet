@@ -5,7 +5,7 @@ export var speed = 10
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
+signal enemy_dead
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,10 +18,12 @@ func set_health(new_health):
 	health = new_health
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+
 	if (health <= 0 ):
-		emit_signal("enemy_hit")
-		## TODO play enemy dying animatoin
-		queue_free()
+
+		emit_signal("enemy_dead")
+
+		
 	
 func take_damage(amount):
 

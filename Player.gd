@@ -12,7 +12,6 @@ export var health = 1
 export(bool) var auto_straighten
 export(float, 0, 10, 0.1)  var rotation_speed
 export(int, 90) var rotation_limit
-signal hit
 signal game_over
 signal shoot
 var allow_shoot = true
@@ -32,16 +31,18 @@ func set_health(new_health):
 func start(pos):
 	position = pos
 	show()
+	$Sprite.visible = true
 	$CollisionShape2D.disabled = false
+
 
 func _process(delta):
 	
 	if (health <= 0 ):
-
-		emit_signal("game_over")
-		## TODO play player dying animatoin
-		queue_free()
+		$Sprite.visible = false
+		$ExplosionPlayer.play('explosion') 
 		speed = 0
+		rotation_speed = 0
+
 		
 	var rotation_degree = global_rotation * (180/PI)
 
@@ -85,11 +86,10 @@ func handle_inputs(delta, rotation_degree):
 		if (allow_shoot):
 			## TODO play the shooting animation
 			emit_signal('shoot')
-			$AnimatedSprite.play('shoot') 
-
-
-
 			allow_shoot = false
+			$AnimationPlayer.queue('shoot') 
+
+
 
 	
 
@@ -131,9 +131,25 @@ func take_damage(amount):
 	health = health - amount
 
 
-func _on_AnimatedSprite_animation_finished():
-	if ($AnimatedSprite.animation ==  'shoot'):
-		allow_shoot = true
+
+
+
+func _on_Player_area_entered(area):
+
+	if (area.has_method('take_damage')):
+		area.take_damage(1)
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	print(anim_name)
+	if (anim_name == 'shoot'):
+		$AnimationPlayer.queue('default')
+		#TODO allow shoot is a bit off
 		
-	if ($AnimatedSprite.animation != 'default'):
-		$AnimatedSprite.animation  = 'default'
+		allow_shoot = true
+
+
+
+func _on_ExplosionPlayer_animation_finished(anim_name):
+	queue_free()
+	emit_signal('game_over')
