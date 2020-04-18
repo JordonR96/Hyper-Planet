@@ -141,7 +141,7 @@ func _on_Player_area_entered(area):
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	print(anim_name)
+
 	if (anim_name == 'shoot'):
 		$AnimationPlayer.queue('default')
 		#TODO allow shoot is a bit off

@@ -13,8 +13,10 @@ func start(_position, _direction):
 	position = _position
 	rotation = _direction.angle() + PI/2
 	
-	print(_direction.angle() * 180/PI)
+
 	$LifeTime.wait_time = lifetime
+	$LifeTime.start()
+	## TODO make the liftime timer kill bullet on timoute
 	velocity = _direction * speed
 
 
@@ -35,3 +37,8 @@ func _on_Bullet_area_entered(area):
 	if (area.has_method('take_damage')):
 		area.take_damage(damage)
 
+
+
+func _on_LifeTime_timeout():
+	print('bullet gone')
+	queue_free()

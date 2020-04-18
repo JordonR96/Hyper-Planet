@@ -116,5 +116,5 @@ anims/explosion = SubResource( 6 )
 anims/none = SubResource( 7 )
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
-[connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_ExplosionPlayer_animation_finished"]
 [connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_AnimationPlayer2_animation_finished"]
+[connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_ExplosionPlayer_animation_finished"]

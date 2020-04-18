@@ -7,6 +7,7 @@ var rand_generate = RandomNumberGenerator.new()
 var tile_count_x
 var tile_count_y
 var tile_resolution
+var active = true
 func _random_number(range_min, range_max):
 	rand_generate.randomize()
 	return rand_generate.randi_range(range_min, range_max)
@@ -15,12 +16,15 @@ func _random_number(range_min, range_max):
 
 
 func start(bg_tile_count_x, bg_tile_count_y, bg_tile_resolution, start_position):
+
+
 	tile_count_x = bg_tile_count_x
 	tile_count_y = bg_tile_count_y
 	tile_resolution = bg_tile_resolution
 	_draw_full_screen()
 	position.x = start_position.x
 	position.y = start_position.y	
+
 
 func _draw_full_screen():
 	# modes of generation
@@ -194,10 +198,18 @@ func _draw_rect(position, width, height, tile_id):
 				set_cell(x,y, tile_id)
 
 func _on_VisibilityNotifier2D_screen_exited():
-	# clear the tiles
-	clear()
-	## draw again
-	_draw_full_screen()
+	
 
-	# move it up
-	position.y = position.y - (tile_count_y * tile_resolution * 3)
+	if (active):
+		# clear the tiles
+		clear()
+		## draw again
+		_draw_full_screen()
+	
+		# move it up
+		position.y = position.y - (tile_count_y * tile_resolution * 3)
+
+
+
+
+

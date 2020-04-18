@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir Caps.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://LaserBlockade.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Camera2D.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir.ttf" type="DynamicFontData" id=5]
 
@@ -68,7 +67,8 @@ __meta__ = {
 [node name="ScoreTimer" type="Timer" parent="."]
 wait_time = 1.75
 
-[node name="LaserBlockade" parent="." instance=ExtResource( 3 )]
-position = Vector2( 179.92, 60.1717 )
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.1
 [connection signal="pressed" from="Camera2D/HUD/StartButton" to="." method="_start_game"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_spawn_enemies"]

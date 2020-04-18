@@ -4,7 +4,7 @@
 [ext_resource path="res://Art/Obstacles/laser-blockade.png" type="Texture" id=2]
 [ext_resource path="res://LaserBlockade.gd" type="Script" id=3]
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=1]
 resource_name = "Dead"
 loop = true
 tracks/0/type = "value"
@@ -20,7 +20,7 @@ tracks/0/keys = {
 "values": [ 14, 14 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=2]
 resource_name = "LaserBlockadeBreak"
 length = 0.8
 tracks/0/type = "value"
@@ -36,8 +36,7 @@ tracks/0/keys = {
 "values": [ 10, 11, 12, 13, 14, 14, 14, 14 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "LaserBlockadeOn"
+[sub_resource type="Animation" id=3]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -52,8 +51,7 @@ tracks/0/keys = {
 "values": [ 6, 7, 8, 4 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "LaserBlockadeStart"
+[sub_resource type="Animation" id=4]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -68,10 +66,10 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 14.9689, 6.06079 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 139.88, 10.568 )
 
 [node name="LaserBlockade" instance=ExtResource( 1 )]
@@ -80,15 +78,16 @@ collision_mask = 17
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" parent="." index="0"]
+visible = false
 position = Vector2( 140.714, 4.24264 )
 z_index = 2
 disabled = true
 
 [node name="AnimationPlayer" parent="." index="1"]
-anims/Dead = SubResource( 6 )
-anims/LaserBlockadeBreak = SubResource( 7 )
-anims/LaserBlockadeOn = SubResource( 2 )
-anims/LaserBlockadeStart = SubResource( 3 )
+anims/Dead = SubResource( 1 )
+anims/LaserBlockadeBreak = SubResource( 2 )
+anims/LaserBlockadeOn = SubResource( 3 )
+anims/LaserBlockadeStart = SubResource( 4 )
 
 [node name="Sprite" parent="." index="2"]
 position = Vector2( -2.5, 2.74999 )
@@ -98,19 +97,19 @@ frame = 6
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="3"]
 position = Vector2( 140.751, -35.7501 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="." index="4"]
 position = Vector2( -145.75, 45.6251 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="." index="5"]
 position = Vector2( 140.751, 45.6251 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="." index="6"]
 position = Vector2( -146, -36.1251 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Beam" type="Area2D" parent="." index="7"]
 position = Vector2( -1.625, -0.625 )
@@ -119,7 +118,7 @@ collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Beam" index="0"]
 position = Vector2( -4.94974, 2.82843 )
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 disabled = true
 [connection signal="area_entered" from="." to="." method="_on_LaserBlockade_area_entered"]
 [connection signal="enemy_dead" from="." to="." method="_on_LaserBlockade_enemy_dead"]

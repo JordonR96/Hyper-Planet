@@ -20,6 +20,9 @@ func set_health(new_health):
 func _process(delta):
 
 	if (health <= 0 ):
+		queue_free()
+		## TODO enemy dead signal
+		# todo play death anim
 
 		emit_signal("enemy_dead")
 

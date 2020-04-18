@@ -3,7 +3,7 @@
 [ext_resource path="res://Enemy.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 0.480621, 0.353409 )
+extents = Vector2( 34.2498, 32.3443 )
 
 [node name="Enemy" type="Area2D"]
 position = Vector2( 202.548, 102.598 )

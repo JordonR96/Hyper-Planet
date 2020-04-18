@@ -9,6 +9,10 @@ resource_name = "default"
 
 [node name="PlayerBullet" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+lifetime = 1.5
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( -0.530331, -0.397748 )
 
 [node name="AnimationPlayer" parent="." index="2"]
 anims/default = SubResource( 1 )

@@ -18,12 +18,14 @@ export (int) var bg_tile_count_y = 10
 export (int) var bg_tile_resolution = 64
 var playerScene = preload("res://Player.tscn")
 var player
+
+var SDScene = preload("res://SideDropship.tscn")
+
 # TODO make this customisable so can have diff bullets?
 var PlayerBulletScene = preload('res://PlayerBullet.tscn')
 
-var Background1Scene = preload("res://Background.tscn")
-var Background2Scene = preload("res://Background.tscn")
-var Background3Scene = preload("res://Background.tscn")
+var BackgroundScene = preload("res://Background.tscn")
+
 var Background1
 var Background2
 var Background3
@@ -42,21 +44,30 @@ func _ready():
 	$Camera2D/HUD/GameOver.hide()
 	
 func _start_backgrounds():
-	Background1 = Background1Scene.instance()
-	Background2 = Background2Scene.instance()
-	Background3 = Background3Scene.instance()
+	#TODO background not resetting properly on gameover
+
+	Background1 = BackgroundScene.instance()
+	Background2 = BackgroundScene.instance()
+	Background3 = BackgroundScene.instance()
 	Background1.start(bg_tile_count_x, bg_tile_count_y, bg_tile_resolution, Vector2(0,0))
 	Background2.start(bg_tile_count_x, bg_tile_count_y, bg_tile_resolution, Vector2(0,(-1 * bg_tile_count_y * bg_tile_resolution)))
 	Background3.start(bg_tile_count_x, bg_tile_count_y, bg_tile_resolution, Vector2(0,(-2 * bg_tile_count_y * bg_tile_resolution)))
 	add_child(Background1)
 	add_child(Background2)
 	add_child(Background3)
+	
+func _reset_backgrounds():
+
+	Background1.queue_free()
+	Background2.queue_free()
+	Background3.queue_free()
+	
+	_start_backgrounds()
+	
 
 func _start_game():
 	
-	if (!has_node('Background1')):
-		_start_backgrounds()
-	
+
 	player = playerScene.instance()
 	add_child(player)
 
@@ -79,7 +90,40 @@ func _start_game():
 	player.speed = y_axis_speed
 	player.connect('game_over', self, '_game_over')
 	player.connect('shoot', self, '_player_shoot')
-	$Camera2D.start(camera_start_position)
+	_spawn_enemies()
+
+
+	_reset_backgrounds()
+	
+
+func _spawn_enemies():
+	
+	var enemy = SDScene.instance()
+	
+
+	var spawn = Vector2(300, -182)
+	enemy.position = spawn
+	enemy.connect('shoot', self , '_spawn_enemy_bullet')
+	
+	
+	add_child(enemy)
+	print(enemy.position.y)
+	# todo this will be used by spawn path
+	
+	## test spawn point
+
+	pass
+
+func _spawn_enemy_bullet(BulletScene, position, direction):
+	print('shooting2')
+
+	var bullet = BulletScene.instance();
+	
+	bullet.start(position, direction)
+
+	add_child(bullet)
+
+
 
 func _player_shoot():
 	# TODO get player roatatoin, if player is rotated add a pixel amouun
@@ -123,11 +167,6 @@ func _on_ScoreTimer_timeout():
 	 
 func _game_over():
 
-
-	## stop playing
-	Background1.queue_free()
-	Background2.queue_free()
-	Background3.queue_free()
 	## TODO emit a signal that will stop all enemies from scene after x seconds 
 	# or leave it if it wont break everything
 	## TODO  show whole game over screen
@@ -140,6 +179,11 @@ func _game_over():
 	## TODO  show whole game over screen
 	$Camera2D/HUD/StartButton.show()
 	$Camera2D/HUD/StartButton.text = 'Retry'
+	$Camera2D.start(camera_start_position)
+
+	## TODO have gameover screen and show that should be same as start screen, shouldnt just be bg of game
+
+
 
 
 
