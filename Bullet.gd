@@ -7,7 +7,7 @@ export (int) var damage
 export (float) var lifetime
 
 
-# Called when the node enters the scene tree for the first time.
+# Called when thex node enters the scene tree for the first time.
 
 func start(_position, _direction):
 	position = _position
@@ -18,7 +18,12 @@ func start(_position, _direction):
 	$LifeTime.start()
 	## TODO make the liftime timer kill bullet on timoute
 	velocity = _direction * speed
-
+	
+	$AnimationPlayer.play('shoot')
+	
+## TODO need connecting signal from main that when called will just que free
+func _on_destroy_all_enemies():
+	queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

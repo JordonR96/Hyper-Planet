@@ -31,6 +31,8 @@ var Background2
 var Background3
 
 var playing
+
+signal destroy_all_enemies
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	playing = false
@@ -42,6 +44,11 @@ func _ready():
 	# manage backgrounds
 	
 	$Camera2D/HUD/GameOver.hide()
+	
+func _destroy_all_enemies ():
+	## calling this function will remove all enemy and enemy bullets from screen
+	
+	emit_signal("destroy_all_enemies")
 	
 func _start_backgrounds():
 	#TODO background not resetting properly on gameover
@@ -98,13 +105,16 @@ func _start_game():
 
 func _spawn_enemies():
 	
+	# TODO will have spawn manager that has all spwan pahts which will do something like this
+	
 	var enemy = SDScene.instance()
 	
 
-	var spawn = Vector2(300, -182)
+	var spawn = Vector2(0, -182)
 	enemy.position = spawn
 	enemy.connect('shoot', self , '_spawn_enemy_bullet')
-	
+	## make sure we can destroy all enemies if we wish (this will be a pickup)
+	connect('destroy_all_enemies', enemy, '_on_destroy_all_enemies')
 	
 	add_child(enemy)
 	print(enemy.position.y)
@@ -120,8 +130,9 @@ func _spawn_enemy_bullet(BulletScene, position, direction):
 	var bullet = BulletScene.instance();
 	
 	bullet.start(position, direction)
-
+	connect('destroy_all_enemies', bullet, '_on_destroy_all_enemies')
 	add_child(bullet)
+	
 
 
 
@@ -144,7 +155,8 @@ func _player_shoot():
 	bullet2.start(bullet2position, dir)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-
+	
+		
 	if has_node('Player'):
 		
 			# with the player moving in a different direction
@@ -163,6 +175,8 @@ func move_camera(delta, speed):
 func _on_ScoreTimer_timeout():
 	score += score_increment
 	$Camera2D/HUD/ScoreLabel.text = str(score)
+
+
 	
 	 
 func _game_over():
@@ -180,6 +194,10 @@ func _game_over():
 	$Camera2D/HUD/StartButton.show()
 	$Camera2D/HUD/StartButton.text = 'Retry'
 	$Camera2D.start(camera_start_position)
+	
+	# TODO time delay on this signal
+	
+	_destroy_all_enemies()
 
 	## TODO have gameover screen and show that should be same as start screen, shouldnt just be bg of game
 

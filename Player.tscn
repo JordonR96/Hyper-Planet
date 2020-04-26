@@ -4,8 +4,9 @@
 [ext_resource path="res://Art/player/ship_explosion.png" type="Texture" id=2]
 [ext_resource path="res://Player.gd" type="Script" id=4]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 30.9246, 30.7635 )
+[sub_resource type="CapsuleShape2D" id=8]
+radius = 24.15
+height = 11.4644
 
 [sub_resource type="Animation" id=2]
 resource_name = "dead"
@@ -76,7 +77,7 @@ tracks/0/keys = {
 resource_name = "none"
 
 [node name="Player" type="Area2D"]
-position = Vector2( 184.5, 557.009 )
+position = Vector2( 184.5, 557.259 )
 collision_mask = 14
 script = ExtResource( 4 )
 __meta__ = {
@@ -88,7 +89,7 @@ rotation_limit = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.54078e-05, -0.176729 )
-shape = SubResource( 1 )
+shape = SubResource( 8 )
 one_way_collision_margin = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -116,5 +117,5 @@ anims/explosion = SubResource( 6 )
 anims/none = SubResource( 7 )
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
-[connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_AnimationPlayer2_animation_finished"]
 [connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_ExplosionPlayer_animation_finished"]
+[connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_AnimationPlayer2_animation_finished"]

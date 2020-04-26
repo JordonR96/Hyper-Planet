@@ -83,6 +83,7 @@ func handle_inputs(delta, rotation_degree):
 	## TODO change to use custom inputz
 	
 	if (Input.is_action_pressed("ui_select")):
+		## TODO make it so they cant hold button down and shoot
 		if (allow_shoot):
 			## TODO play the shooting animation
 			emit_signal('shoot')
