@@ -20,6 +20,7 @@ var playerScene = preload("res://Player.tscn")
 var player
 
 var SDScene = preload("res://SideDropship.tscn")
+var EDScene = preload("res://ElectroDropship.tscn")
 
 # TODO make this customisable so can have diff bullets?
 var PlayerBulletScene = preload('res://PlayerBullet.tscn')
@@ -107,11 +108,13 @@ func _spawn_enemies():
 	
 	# TODO will have spawn manager that has all spwan pahts which will do something like this
 	
-	var enemy = SDScene.instance()
-	
+#	var enemy = SDScene.instance()
+	var enemy = EDScene.instance()
 
-	var spawn = Vector2(0, -182)
+	var spawn = Vector2(40, -182)
 	enemy.position = spawn
+	enemy.rotation = 45
+
 	enemy.connect('shoot', self , '_spawn_enemy_bullet')
 	## make sure we can destroy all enemies if we wish (this will be a pickup)
 	connect('destroy_all_enemies', enemy, '_on_destroy_all_enemies')
