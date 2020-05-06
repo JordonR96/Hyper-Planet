@@ -5,7 +5,7 @@
 [ext_resource path="res://ElectroDropshipBomb.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 7.46139, 7.62661 )
+extents = Vector2( 6.75428, 7.53822 )
 
 [sub_resource type="Animation" id=2]
 length = 0.1
@@ -113,10 +113,11 @@ func _ready():
 
 [node name="Bullet" instance=ExtResource( 1 )]
 collision_layer = 4
-collision_mask = 1
+collision_mask = 0
 script = ExtResource( 3 )
 speed = 20
 lifetime = 30.0
+delete_on_collision = "No"
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource( 1 )
@@ -130,3 +131,10 @@ anims/Start = SubResource( 4 )
 texture = ExtResource( 2 )
 hframes = 11
 script = SubResource( 5 )
+
+[node name="OnTimer" type="Timer" parent="." index="4"]
+wait_time = 0.5
+one_shot = true
+autostart = true
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="timeout" from="OnTimer" to="." method="_on_OnTimer_timeout"]

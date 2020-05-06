@@ -6,6 +6,7 @@ export (int) var speed
 export (int) var damage
 export (float) var lifetime
 
+export (String, 'Yes', 'No') var delete_on_collision = 'Yes'
 
 # Called when thex node enters the scene tree for the first time.
 
@@ -37,13 +38,17 @@ func _process(delta):
 
 
 func _on_Bullet_area_entered(area):
-
-	queue_free()
+	
+	print('collision')
+	
+	if (delete_on_collision == 'Yes'):
+		queue_free()
+		
 	if (area.has_method('take_damage')):
 		area.take_damage(damage)
 
 
 
 func _on_LifeTime_timeout():
-	print('bullet gone')
+
 	queue_free()

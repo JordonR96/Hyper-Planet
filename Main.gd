@@ -31,6 +31,9 @@ var Background1
 var Background2
 var Background3
 
+
+#TODO look into doing some linear interpolation stuff with an enemy/bullets
+
 var playing
 
 signal destroy_all_enemies
@@ -111,7 +114,7 @@ func _spawn_enemies():
 #	var enemy = SDScene.instance()
 	var enemy = EDScene.instance()
 
-	var spawn = Vector2(40, -182)
+	var spawn = Vector2(100, -182)
 	enemy.position = spawn
 	enemy.rotation = 45
 
@@ -120,7 +123,7 @@ func _spawn_enemies():
 	connect('destroy_all_enemies', enemy, '_on_destroy_all_enemies')
 	
 	add_child(enemy)
-	print(enemy.position.y)
+
 	# todo this will be used by spawn path
 	
 	## test spawn point
@@ -128,7 +131,7 @@ func _spawn_enemies():
 	pass
 
 func _spawn_enemy_bullet(BulletScene, position, direction):
-	print('shooting2')
+
 
 	var bullet = BulletScene.instance();
 	

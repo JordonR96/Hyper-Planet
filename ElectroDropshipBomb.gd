@@ -1,19 +1,15 @@
 extends 'Bullet.gd'
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-#TODO
-# once on it moves down screen
-## make it wait a few seconds then s=trigger start animation then once done play on animation + stop moving
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$AnimationPlayer.play('Off')
 	pass # Replace with function body.
 
+func _on_OnTimer_timeout():
+	print('playing')
+	$AnimationPlayer.play('Start')
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if (anim_name == 'Start'):
+		$AnimationPlayer.play('On')
