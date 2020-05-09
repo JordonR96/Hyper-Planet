@@ -1,0 +1,129 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://EnemyScenes/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Art/Obstacles/laser-blockade.png" type="Texture" id=2]
+[ext_resource path="res://EnemyScenes/LaserBlockade.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=7]
+resource_name = "LaserBlockadeBreak"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 9, 10, 11, 12, 13, 14, 14 ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "LaserBlockadeOff"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 14 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.48 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 14.9689, 6.06079 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 139.88, 10.568 )
+
+[node name="LaserBlockade" instance=ExtResource( 1 )]
+position = Vector2( 178.506, 61.5859 )
+collision_mask = 17
+script = ExtResource( 3 )
+life_time = 10.0
+dead_animation_name = "LaserBlockadeBreak"
+
+[node name="CollisionShape2D" parent="." index="0"]
+visible = false
+position = Vector2( 140.714, 4.24264 )
+z_index = 2
+disabled = true
+
+[node name="AnimationPlayer" parent="." index="1"]
+method_call_mode = 1
+anims/LaserBlockadeBreak = SubResource( 7 )
+anims/LaserBlockadeOff = SubResource( 1 )
+anims/LaserBlockadeOn = SubResource( 3 )
+anims/LaserBlockadeStart = SubResource( 4 )
+
+[node name="Sprite" parent="." index="2"]
+position = Vector2( -2.5, 2.74999 )
+texture = ExtResource( 2 )
+vframes = 15
+frame = 12
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="3"]
+position = Vector2( 140.751, -35.7501 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." index="4"]
+position = Vector2( -145.75, 45.6251 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="." index="5"]
+position = Vector2( 140.751, 45.6251 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="." index="6"]
+position = Vector2( -146, -36.1251 )
+shape = SubResource( 5 )
+
+[node name="Beam" type="Area2D" parent="." index="7"]
+position = Vector2( -1.625, -0.625 )
+collision_layer = 0
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Beam" index="0"]
+position = Vector2( -4.94974, 2.82843 )
+shape = SubResource( 6 )
+disabled = true
+[connection signal="enemy_dead" from="." to="." method="_on_LaserBlockade_enemy_dead"]
+[connection signal="visibility_changed" from="." to="." method="_on_LaserBlockade_visibility_changed"]
+[connection signal="area_entered" from="Beam" to="." method="_on_Beam_area_entered"]

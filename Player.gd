@@ -4,6 +4,8 @@ extends Area2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+
+# TODO limit consecutive player shots, maybe have ammo meter
 var screen_size
 var speed 
 
@@ -18,6 +20,8 @@ var allow_shoot = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()
+	
+	$AnimationPlayer.play('default')
 
 	screen_size = get_viewport_rect().size
 	$CollisionShape2D.disabled = true
@@ -88,7 +92,7 @@ func handle_inputs(delta, rotation_degree):
 			## TODO play the shooting animation
 			emit_signal('shoot')
 			allow_shoot = false
-			$AnimationPlayer.queue('shoot') 
+			$AnimationPlayer.play('shoot') 
 
 
 
@@ -144,7 +148,7 @@ func _on_Player_area_entered(area):
 func _on_AnimationPlayer_animation_finished(anim_name):
 
 	if (anim_name == 'shoot'):
-		$AnimationPlayer.queue('default')
+		$AnimationPlayer.play('default')
 		#TODO allow shoot is a bit off
 		
 		allow_shoot = true

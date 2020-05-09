@@ -5,9 +5,11 @@ var velocity = Vector2()
 export (int) var speed
 export (int) var damage
 export (float) var lifetime
-
+export (PackedScene) var explosion;
+export (String, 'Yes', 'No') var use_explosion = 'No'
 export (String, 'Yes', 'No') var delete_on_collision = 'Yes'
 
+signal add_explosion
 # Called when thex node enters the scene tree for the first time.
 
 func start(_position, _direction):
@@ -16,11 +18,11 @@ func start(_position, _direction):
 	
 
 	$LifeTime.wait_time = lifetime
-	$LifeTime.start()
+
 	## TODO make the liftime timer kill bullet on timoute
 	velocity = _direction * speed
 	
-	$AnimationPlayer.play('shoot')
+
 	
 ## TODO need connecting signal from main that when called will just que free
 func _on_destroy_all_enemies():
@@ -38,10 +40,11 @@ func _process(delta):
 
 
 func _on_Bullet_area_entered(area):
-	
-	print('collision')
-	
-	if (delete_on_collision == 'Yes'):
+
+	if (delete_on_collision == 'Yes'):		
+		if (use_explosion == 'Yes'):
+
+			emit_signal('add_explosion', explosion, position)
 		queue_free()
 		
 	if (area.has_method('take_damage')):

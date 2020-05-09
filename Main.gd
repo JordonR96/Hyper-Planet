@@ -19,9 +19,12 @@ export (int) var bg_tile_resolution = 64
 var playerScene = preload("res://Player.tscn")
 var player
 
-var SDScene = preload("res://SideDropship.tscn")
-var EDScene = preload("res://ElectroDropship.tscn")
-
+var SDScene = preload("res://EnemyScenes/SideDropship.tscn")
+var EDScene = preload("res://EnemyScenes/ElectroDropship.tscn")
+var BSScene = preload("res://EnemyScenes/BombSmiler.tscn")
+var LBScene = preload("res://EnemyScenes/LaserBlock.tscn")
+var MScene = preload("res://EnemyScenes/Mech.tscn")
+var CGScene = preload("res://EnemyScenes/ChainGun.tscn")
 # TODO make this customisable so can have diff bullets?
 var PlayerBulletScene = preload('res://PlayerBullet.tscn')
 
@@ -110,14 +113,16 @@ func _start_game():
 func _spawn_enemies():
 	
 	# TODO will have spawn manager that has all spwan pahts which will do something like this
+	# emit signal thta calls this function passing in corrrect scenes
 	
 #	var enemy = SDScene.instance()
-	var enemy = EDScene.instance()
+	var enemy = CGScene.instance()
 
 	var spawn = Vector2(100, -182)
 	enemy.position = spawn
-	enemy.rotation = 45
-
+	enemy.rotation = -45
+	
+	enemy.connect('add_explosion', self, '_on_add_explosion')
 	enemy.connect('shoot', self , '_spawn_enemy_bullet')
 	## make sure we can destroy all enemies if we wish (this will be a pickup)
 	connect('destroy_all_enemies', enemy, '_on_destroy_all_enemies')
@@ -135,12 +140,18 @@ func _spawn_enemy_bullet(BulletScene, position, direction):
 
 	var bullet = BulletScene.instance();
 	
+	bullet.connect('add_explosion', self, '_on_add_explosion')
+	
 	bullet.start(position, direction)
 	connect('destroy_all_enemies', bullet, '_on_destroy_all_enemies')
 	add_child(bullet)
 	
+func _on_add_explosion(explosionScene, position):
 
+	var explosion = explosionScene.instance()
 
+	explosion.position = position
+	add_child(explosion)
 
 func _player_shoot():
 	# TODO get player roatatoin, if player is rotated add a pixel amouun

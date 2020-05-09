@@ -4,7 +4,7 @@
 [ext_resource path="res://Art/player/ship_explosion.png" type="Texture" id=2]
 [ext_resource path="res://Player.gd" type="Script" id=4]
 
-[sub_resource type="CapsuleShape2D" id=8]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 24.15
 height = 11.4644
 
@@ -34,10 +34,22 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Explosion:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 10 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -89,7 +101,7 @@ rotation_limit = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.54078e-05, -0.176729 )
-shape = SubResource( 8 )
+shape = SubResource( 1 )
 one_way_collision_margin = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -111,6 +123,7 @@ position = Vector2( 0, 0.25 )
 texture = ExtResource( 1 )
 vframes = 2
 hframes = 2
+frame = 1
 
 [node name="ExplosionPlayer" type="AnimationPlayer" parent="."]
 anims/explosion = SubResource( 6 )
@@ -118,4 +131,3 @@ anims/none = SubResource( 7 )
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_ExplosionPlayer_animation_finished"]
-[connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_AnimationPlayer2_animation_finished"]

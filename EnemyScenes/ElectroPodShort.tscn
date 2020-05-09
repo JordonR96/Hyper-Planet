@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://EnemyScenes/ElectroPodBeam.tscn" type="PackedScene" id=1]
+[ext_resource path="res://EnemyScenes/ElectroPod.tscn" type="PackedScene" id=2]
+
+[node name="Node2D" type="Node2D"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Pod1" parent="." instance=ExtResource( 2 )]
+position = Vector2( -0.141602, -67.8147 )
+rotation = -1.5708
+
+[node name="Pod2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0.108398, 68.1853 )
+rotation = 1.5708
+
+[node name="Beam" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 0 )

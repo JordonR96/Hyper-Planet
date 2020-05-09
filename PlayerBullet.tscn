@@ -9,6 +9,7 @@ resource_name = "default"
 
 [node name="PlayerBullet" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+speed = 600
 lifetime = 1.5
 
 [node name="CollisionShape2D" parent="." index="0"]

@@ -1,0 +1,204 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://EnemyScenes/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Art/enemies/ChainGunShip/ChainGunShip.png" type="Texture" id=2]
+[ext_resource path="res://Art/enemies/ChainGunShip/ChanGunShipFlame.png" type="Texture" id=3]
+[ext_resource path="res://Art/enemies/ChainGunShip/ChainGunShipBlast.png" type="Texture" id=4]
+[ext_resource path="res://EnemyScenes/ChainGun.gd" type="Script" id=5]
+[ext_resource path="res://EnemyScenes/ChainGunBullet.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Explosions/ExplosionD.tscn" type="PackedScene" id=7]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 21.55
+height = 16.9
+
+[sub_resource type="Animation" id=3]
+resource_name = "ChainGunDead"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Flame:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Blast:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Blast2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 5, 6, 7 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Default"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Flame:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Blast:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Blast2:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.0276027, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 2 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Blast:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Blast2:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Flame:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[node name="Enemy" instance=ExtResource( 1 )]
+position = Vector2( 3.0052, -1.23744 )
+collision_mask = 17
+script = ExtResource( 5 )
+explosion = ExtResource( 7 )
+use_explosion = "Yes"
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( -3, 1 )
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" parent="." index="1"]
+method_call_mode = 1
+anims/ChainGunDead = SubResource( 3 )
+anims/Default = SubResource( 2 )
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource( 2 )
+hframes = 9
+frame = 3
+
+[node name="Flame" type="Sprite" parent="." index="4"]
+position = Vector2( -2.28033, -34.7474 )
+texture = ExtResource( 3 )
+hframes = 3
+frame = 2
+
+[node name="Blast" type="Sprite" parent="." index="5"]
+position = Vector2( -15.2912, 31.643 )
+texture = ExtResource( 4 )
+hframes = 4
+frame = 2
+
+[node name="ShootTimer" type="Timer" parent="." index="6"]
+wait_time = 0.1
+autostart = true
+
+[node name="Blast2" type="Sprite" parent="." index="7"]
+position = Vector2( 11.0485, 31.8198 )
+texture = ExtResource( 4 )
+hframes = 4
+frame = 2
+
+[node name="Bullet" parent="." index="8" instance=ExtResource( 6 )]
+position = Vector2( -15.6889, 30.4056 )
+
+[node name="Bullet2" parent="." index="9" instance=ExtResource( 6 )]
+position = Vector2( 10.474, 29.6101 )
+[connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]

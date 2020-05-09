@@ -1,0 +1,107 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Bullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Art/enemies/laserblocklaser.png" type="Texture" id=2]
+[ext_resource path="res://EnemyScenes/LaserBlockLaser.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6.3, 31.25 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Off"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "On"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.174285, 0.177874 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[node name="Bullet" instance=ExtResource( 1 )]
+collision_layer = 4
+collision_mask = 21
+script = ExtResource( 3 )
+speed = 0
+lifetime = 20.0
+delete_on_collision = "No"
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="LifeTime" parent="." index="1"]
+one_shot = false
+
+[node name="AnimationPlayer" parent="." index="2"]
+anims/Off = SubResource( 3 )
+anims/On = SubResource( 2 )
+
+[node name="Sprite" parent="." index="3"]
+visible = false
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="Timer" type="Timer" parent="." index="4"]
+one_shot = true
+autostart = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

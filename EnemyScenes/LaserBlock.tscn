@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://EnemyScenes/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Art/enemies/laser_block/laserblock.png" type="Texture" id=2]
+[ext_resource path="res://EnemyScenes/LaserBlock.gd" type="Script" id=3]
+[ext_resource path="res://EnemyScenes/LaserBlockLaser.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "On"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Shoot"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 0 ]
+}
+
+[node name="Enemy" instance=ExtResource( 1 )]
+position = Vector2( 233.798, 79.848 )
+script = ExtResource( 3 )
+take_damage = "No"
+life_time = 7.0
+
+[node name="AnimationPlayer" parent="." index="1"]
+anims/On = SubResource( 1 )
+anims/Shoot = SubResource( 2 )
+
+[node name="Sprite" parent="." index="2"]
+position = Vector2( -0.25, 18.25 )
+texture = ExtResource( 2 )
+hframes = 3
+
+[node name="Laser1" parent="." index="4" instance=ExtResource( 4 )]
+position = Vector2( -0.5, 33.75 )
+
+[node name="Laser2" parent="." index="5" instance=ExtResource( 4 )]
+position = Vector2( -0.5, 95.75 )
+
+[node name="Laser3" parent="." index="6" instance=ExtResource( 4 )]
+position = Vector2( -0.499985, 157.75 )
+
+[node name="Laser4" parent="." index="7" instance=ExtResource( 4 )]
+position = Vector2( -0.5, 220 )
+
+[node name="Laser5" parent="." index="8" instance=ExtResource( 4 )]
+position = Vector2( -0.5, 282.932 )
+
+[node name="Laser6" parent="." index="9" instance=ExtResource( 4 )]
+position = Vector2( -0.5, 345.432 )
+
+[node name="Laser7" parent="." index="10" instance=ExtResource( 4 )]
+position = Vector2( -0.25, 408.432 )
+
+[node name="Laser8" parent="." index="11" instance=ExtResource( 4 )]
+position = Vector2( 0, 470.682 )
+
+[node name="Laser9" parent="." index="12" instance=ExtResource( 4 )]
+position = Vector2( -0.25, 533.432 )
+
+[node name="Laser10" parent="." index="13" instance=ExtResource( 4 )]
+position = Vector2( -0.25, 596.182 )
+
+[node name="Laser11" parent="." index="14" instance=ExtResource( 4 )]
+position = Vector2( -0.25, 658.432 )
+
+[node name="Laser12" parent="." index="15" instance=ExtResource( 4 )]
+position = Vector2( -0.25, 722.432 )

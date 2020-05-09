@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://EnemyScenes/ElectroDropship.gd" type="Script" id=1]
+[ext_resource path="res://Art/enemies/electric_dropship/ELectricdriopship.png" type="Texture" id=2]
+[ext_resource path="res://EnemyScenes/Enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Explosions/ExplosionA.tscn" type="PackedScene" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 13.6653
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 13.0908
+height = 32.488
+
+[sub_resource type="Animation" id=5]
+resource_name = "SDDead"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 7, 8, 9, 10, 11, 12 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3 ]
+}
+
+[node name="Enemy" instance=ExtResource( 3 )]
+position = Vector2( 0, 0 )
+collision_mask = 17
+script = ExtResource( 1 )
+speed = 87
+life_time = 10.0
+dead_animation_name = "EDDead"
+explosion = ExtResource( 4 )
+use_explosion = "Yes"
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="0"]
+position = Vector2( -27.4004, 4.5078 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." index="1"]
+position = Vector2( 24.8371, 5.2149 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" parent="." index="2"]
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" parent="." index="3"]
+anims/EDDead = SubResource( 5 )
+anims/Fly = SubResource( 4 )
+
+[node name="Sprite" parent="." index="4"]
+texture = ExtResource( 2 )
+hframes = 9
+frame = 8
+
+[node name="ShootTimer" type="Timer" parent="." index="5"]
+autostart = true
+[connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]

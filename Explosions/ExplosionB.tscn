@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Explosions/ExplosionA.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Art/Explosions/ExplosionB.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "ExplodeB"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CollisionShape2D:shape:extents")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8.25, 11.55 ), Vector2( 14.5, 13.55 ), Vector2( 19.25, 19.3 ), Vector2( 8.25, 10.3 ), Vector2( 3, 2.8 ) ]
+}
+
+[node name="Enemy" instance=ExtResource( 1 )]
+animation_name = "ExplodeB"
+
+[node name="AnimationPlayer" parent="." index="1"]
+anims/ExplodeB = SubResource( 1 )
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource( 2 )
+hframes = 10
+frame = 8

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Explosions/ExplosionGroup.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Explosions/ExplosionB.tscn" type="PackedScene" id=2]
+
+[node name="Node2D" instance=ExtResource( 1 )]
+Explosion1Scene = ExtResource( 2 )
+Explosion2Scene = ExtResource( 2 )
