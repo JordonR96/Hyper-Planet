@@ -4,7 +4,8 @@ export (int) var shoot_timer_wait
 export (String, 'Right', 'Left') var x_direction_name 
 var x_direction
 var velocity 
-# Declare member variables here. Examples:
+# Declare member variables here. Examples: TODO bullets nmpt shjooting at right anmgle
+
 # var a = 2
 # var b = "text"
 var Bullet  = preload("res://EnemyScenes/SDBullet.tscn")

@@ -17,6 +17,8 @@ func _ready():
 
 
 func _on_AttackTimer_timeout():
+	# TODO when attacking fddont allow tht emech to die
+	
 	$AnimationPlayer.play("Attack")
 	
 ## TODO some movement patternz

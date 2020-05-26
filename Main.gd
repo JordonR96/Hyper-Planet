@@ -116,7 +116,7 @@ func _spawn_enemies():
 	# emit signal thta calls this function passing in corrrect scenes
 	
 #	var enemy = SDScene.instance()
-	var enemy = CGScene.instance()
+	var enemy = MScene.instance()
 
 	var spawn = Vector2(100, -182)
 	enemy.position = spawn
