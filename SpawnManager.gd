@@ -8,6 +8,11 @@ var topSpawnPoints = []
 export (int) var spawnIncrement = 1
 var screen_size
 
+var leftMasterList = []
+
+var rightMasterList = []
+var topMasterList = []
+signal spawn
 # HAVE TEMP ARRAY WHERE WE REMOVE SPAWNS AA THEY USE TO PREVENT LOTS OF REPEAT OF SAME ONE<
 # then reeset on interval
 
@@ -19,8 +24,8 @@ func _ready():
 		topSpawnPoints.append(Vector2(i*spawnIncrement,-64))
 	
 	for i in range(screen_size.y/spawnIncrement + 1):
-		rightSpawnPoints.append(Vector2(360, i*spawnIncrement))
-		leftSpawnPoints.append(Vector2(0, i*spawnIncrement))
+		rightSpawnPoints.append(Vector2(400, i*spawnIncrement))
+		leftSpawnPoints.append(Vector2(-60, i*spawnIncrement))
 	
 	# now have arrays with spawn vectors across x and y axis
 	

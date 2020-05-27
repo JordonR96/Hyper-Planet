@@ -104,23 +104,24 @@ func _start_game():
 	player.speed = y_axis_speed
 	player.connect('game_over', self, '_game_over')
 	player.connect('shoot', self, '_player_shoot')
-	_spawn_enemies()
+
 
 
 	_reset_backgrounds()
 	
 
-func _spawn_enemies():
+func _on_SpawnManager_spawn(EnemyScene, spawnVector):
+	# pass in scene and any config
 	
 	# TODO will have spawn manager that has all spwan pahts which will do something like this
 	# emit signal thta calls this function passing in corrrect scenes
 	
 #	var enemy = SDScene.instance()
-	var enemy = MScene.instance()
+	var enemy = EnemyScene.instance()
 
 	var spawn = Vector2(100, -182)
-	enemy.position = spawn
-	enemy.rotation = -45
+	enemy.position = spawnVector
+
 	
 	enemy.connect('add_explosion', self, '_on_add_explosion')
 	enemy.connect('shoot', self , '_spawn_enemy_bullet')
@@ -129,11 +130,6 @@ func _spawn_enemies():
 	
 	add_child(enemy)
 
-	# todo this will be used by spawn path
-	
-	## test spawn point
-
-	pass
 
 func _spawn_enemy_bullet(BulletScene, position, direction):
 
@@ -226,4 +222,3 @@ func _game_over():
 
 
 
-	
