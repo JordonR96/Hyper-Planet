@@ -1,21 +1,26 @@
 extends 'Enemy.gd'
 
+# TODO smoother death anim
+
 export (int) var shoot_timer_wait
 export (String, 'Right', 'Left') var x_direction_name 
 var x_direction
-var velocity 
+var velocity
+var rand_generate = RandomNumberGenerator.new()
 # Declare member variables here. Examples: TODO bullets nmpt shjooting at right anmgle
 
-# var a = 2
-# var b = "text"
 var Bullet  = preload("res://EnemyScenes/SDBullet.tscn")
 # list of spawn locations, 0 is closest to back of shi[]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	rand_generate.randomize()
+	speed = rand_generate.randi_range(50,200)
 	
-	# TODO set correct animation direction
-	# TODO positions not work
+	rand_generate.randomize()
+	shoot_timer_wait = rand_generate.randf_range(0.3,360/speed)
+	
+	
 	# get array of bullet spawn positions
 	if (x_direction_name == 'Left'):
 		x_direction = -1;
@@ -26,11 +31,9 @@ func _ready():
 	
 	
 	velocity = Vector2(x_direction, 0) * speed
-	# TODO should set it to randm number, based on speed and screen width (so would shoot somewhere between start and being off screen)
+
 	$ShootTimer.wait_time = shoot_timer_wait
 	$ShootTimer.start()
-	#`TODO will have direction left or right depending on spawn side of screen
-	
 
 	pass # Replace with function body.
 
@@ -48,10 +51,6 @@ func _on_ShootTimer_timeout():
 	#randomise shoot patterns
 	
 	
-	
-	# TODO more complex shooting patterns, ie start to finish with wait time, 
-	# finish to start
-	# spawn even indexes then odd indexes
 
 	if (x_direction_name == 'Left'):
 		for i in range(6):

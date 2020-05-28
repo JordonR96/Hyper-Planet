@@ -2,19 +2,25 @@ extends 'Enemy.gd'
 
 var Bomb  = preload("ElectroDropshipBomb.tscn")
 var enable_shoot = 'Yes'
-## TODO some movement patternz
 
-## give some movement patterns (straight, diagonal, sinusoidal
+# todo smooth deathg anim
 
 #(have diff interval ranges for bomb drops)
 
-## make it stay on screen ifront of player for a bit sometimes
-## hagve range of time periods we can select from
-## othertimes just comes on and off
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
+	
+
 	$AnimationPlayer.play('Fly')
+	var rand_generate = RandomNumberGenerator.new()
+	rand_generate.randomize()
+	speed = rand_generate.randi_range(50,200)
+	
+	rand_generate.randomize()
+	rotation = rand_generate.randi_range(0,360)
+	
+	rand_generate.randomize()
+	$ShootTimer.set_wait_time(rand_generate.randi_range(0.5,3))
+	# randomise, speed, and directin and bullet drop rate
 	pass # Replace with function body.
 
 

@@ -13,7 +13,7 @@ export (float) var timer_2_time
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var Explosion1 = Explosion1Scene.instance()
-	Explosion1.position.x += 0
+	Explosion1.position.x += 10
 	add_child(Explosion1)
 	$Timer.wait_time = timer_1_time
 	$Timer.start()
@@ -28,7 +28,7 @@ func _ready():
 
 func _on_Timer_timeout():
 	var Explosion2 = Explosion1Scene.instance()
-	Explosion2.position.x -= 30
+	Explosion2.position.x -= 80
 	add_child(Explosion2)
 	if (using_3):
 		$Timer2.wait_time = timer_2_time
@@ -41,5 +41,5 @@ func _on_LifeTime_timeout():
 
 func _on_Timer2_timeout():
 	var Explosion3 = Explosion1Scene.instance()
-	Explosion3.position.x += 30
+	Explosion3.position.x += 70
 	add_child(Explosion3)

@@ -4,7 +4,7 @@
 [ext_resource path="res://Art/Obstacles/laser-blockade.png" type="Texture" id=2]
 [ext_resource path="res://EnemyScenes/LaserBlockade.gd" type="Script" id=3]
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=1]
 resource_name = "LaserBlockadeBreak"
 length = 0.6
 tracks/0/type = "value"
@@ -20,8 +20,7 @@ tracks/0/keys = {
 "values": [ 9, 10, 11, 12, 13, 14, 14 ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "LaserBlockadeOff"
+[sub_resource type="Animation" id=2]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -88,8 +87,8 @@ disabled = true
 
 [node name="AnimationPlayer" parent="." index="1"]
 method_call_mode = 1
-anims/LaserBlockadeBreak = SubResource( 7 )
-anims/LaserBlockadeOff = SubResource( 1 )
+anims/LaserBlockadeBreak = SubResource( 1 )
+anims/LaserBlockadeOff = SubResource( 2 )
 anims/LaserBlockadeOn = SubResource( 3 )
 anims/LaserBlockadeStart = SubResource( 4 )
 

@@ -12,7 +12,7 @@
 radius = 21.55
 height = 16.9
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "ChainGunDead"
 length = 0.4
 tracks/0/type = "value"
@@ -64,8 +64,7 @@ tracks/3/keys = {
 "values": [ 5, 6, 7 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Default"
+[sub_resource type="Animation" id=3]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -166,8 +165,8 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" parent="." index="1"]
 method_call_mode = 1
-anims/ChainGunDead = SubResource( 3 )
-anims/Default = SubResource( 2 )
+anims/ChainGunDead = SubResource( 2 )
+anims/Default = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
 texture = ExtResource( 2 )
@@ -201,4 +200,8 @@ position = Vector2( -15.6889, 30.4056 )
 
 [node name="Bullet2" parent="." index="9" instance=ExtResource( 6 )]
 position = Vector2( 10.474, 29.6101 )
+
+[node name="RotateTimer" type="Timer" parent="." index="10"]
+autostart = true
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
+[connection signal="timeout" from="RotateTimer" to="." method="_on_RotateTimer_timeout"]

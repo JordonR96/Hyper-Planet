@@ -2,38 +2,43 @@ extends 'Enemy.gd'
 
 var Bullet  = preload("ChainGunBullet.tscn")
 var enable_shoot = 'Yes'
-## TODO some movement patternz
 
-## give some movement patterns (straight, diagonal, sinusoidal
-
-#(have diff interval ranges for bomb drops)
-
-## make it stay on screen ifront of player for a bit sometimes
-## hagve range of time periods we can select from
-## othertimes just comes on and off
+var rotate_speed = 0;
+var rotate_direction = +1
+var rand_generate = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimationPlayer.play('Default')
-	pass # Replace with function body.
+	
+	rand_generate.randomize()
+	speed = rand_generate.randi_range(0,50)
+	
+	rand_generate.randomize()
+	rotate_speed = rand_generate.randi_range(0,4)
+	
+	rand_generate.randomize()
+	rotation_degrees = rand_generate.randi_range(-90,90)
 
+	rand_generate.randomize()
+	$RotateTimer.set_wait_time(rand_generate.randf_range(0,1))
 
+	rand_generate.randomize()
+	$ShootTimer.set_wait_time(rand_generate.randf_range(0.1,0.5))
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if (health <= 0):
 
 		enable_shoot = 'No'
-	var rotation_degree = rotation * (180/PI)
 	
-	# TODO make it rotate between values
+
+	var velocity = Vector2(0, 1 ).rotated(rotation) * speed * delta
+	position += velocity
+
+	rotation_degrees += rotate_speed * delta * rotate_direction
+
 	
-	
-	
-	# TODO make it move a but then stationary rotate, also have one that just shoots 
-	# have different modes where it stationary and rotates within limits and shoots
-	# and one where it goes accross screen left to right shooting
-	
-	pass
+
 
 
 func _on_ShootTimer_timeout():
@@ -54,3 +59,7 @@ func _on_ShootTimer_timeout():
 	else: $ShootTimer.stop()
 
 
+
+
+func _on_RotateTimer_timeout():
+	rotate_direction *= -1

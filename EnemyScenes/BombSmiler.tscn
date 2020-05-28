@@ -96,7 +96,7 @@ script = ExtResource( 3 )
 dead_animation_name = "BSDead"
 
 [node name="ShootTimer" type="Timer" parent="." index="0"]
-wait_time = 2.0
+wait_time = 0.001
 autostart = true
 
 [node name="CollisionShape2D" parent="." index="1"]
@@ -115,4 +115,8 @@ frame = 6
 
 [node name="LifeTimer" parent="." index="4"]
 wait_time = 10.0
+
+[node name="DirectionSwitchTimer" type="Timer" parent="." index="5"]
+autostart = true
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
+[connection signal="timeout" from="DirectionSwitchTimer" to="." method="_on_DirectionSwitchTimer_timeout"]

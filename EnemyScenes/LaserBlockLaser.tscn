@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6.3, 31.25 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Off"
 length = 0.1
 loop = true
@@ -36,8 +36,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "On"
+[sub_resource type="Animation" id=3]
 length = 0.2
 loop = true
 tracks/0/type = "value"
@@ -93,8 +92,8 @@ disabled = true
 one_shot = false
 
 [node name="AnimationPlayer" parent="." index="2"]
-anims/Off = SubResource( 3 )
-anims/On = SubResource( 2 )
+anims/Off = SubResource( 2 )
+anims/On = SubResource( 3 )
 
 [node name="Sprite" parent="." index="3"]
 visible = false

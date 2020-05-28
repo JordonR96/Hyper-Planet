@@ -89,7 +89,8 @@ func handle_inputs(delta, rotation_degree):
 	if (Input.is_action_pressed("ui_select")):
 		## TODO make it so they cant hold button down and shoot
 		if (allow_shoot):
-			## TODO play the shooting animation
+			#TODO if rotated, add smalll extra x position in dir of rotation
+			# when spawning bullet so it still looks like its coming from gun
 			emit_signal('shoot')
 			allow_shoot = false
 			$AnimationPlayer.play('shoot') 

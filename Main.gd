@@ -1,3 +1,8 @@
+
+# todo 
+# glow effe ct around the animatyion bneeds to be sorted didnt
+# have the issue iobn maC
+
 extends Node2D
 
 export(int, 1000) var y_axis_speed
@@ -19,23 +24,18 @@ export (int) var bg_tile_resolution = 64
 var playerScene = preload("res://Player.tscn")
 var player
 
-var SDScene = preload("res://EnemyScenes/SideDropship.tscn")
-var EDScene = preload("res://EnemyScenes/ElectroDropship.tscn")
-var BSScene = preload("res://EnemyScenes/BombSmiler.tscn")
-var LBScene = preload("res://EnemyScenes/LaserBlock.tscn")
-var MScene = preload("res://EnemyScenes/Mech.tscn")
-var CGScene = preload("res://EnemyScenes/ChainGun.tscn")
+
 # TODO make this customisable so can have diff bullets?
 var PlayerBulletScene = preload('res://PlayerBullet.tscn')
 
 var BackgroundScene = preload("res://Background.tscn")
+
 
 var Background1
 var Background2
 var Background3
 
 
-#TODO look into doing some linear interpolation stuff with an enemy/bullets
 
 var playing
 
@@ -110,27 +110,26 @@ func _start_game():
 	_reset_backgrounds()
 	
 
-func _on_SpawnManager_spawn(EnemyScene, spawnVector):
-	# pass in scene and any config
+func _on_SpawnManager_spawn(EnemyScene, spawnPosition, optionalConfig):
+
+	# spawn type is top left or right
 	
-	# TODO will have spawn manager that has all spwan pahts which will do something like this
-	# emit signal thta calls this function passing in corrrect scenes
-	
-#	var enemy = SDScene.instance()
 	var enemy = EnemyScene.instance()
-
-	var spawn = Vector2(100, -182)
-	enemy.position = spawnVector
-
+	spawnPosition.x = spawnPosition.x + $Camera2D.position.x
+	spawnPosition.y = spawnPosition.y + $Camera2D.position.y
 	
+	# for direction based enemies
+	if (optionalConfig.has('x_direction_name')):
+		enemy.x_direction_name = optionalConfig.x_direction_name
+	
+	enemy.position = spawnPosition
 	enemy.connect('add_explosion', self, '_on_add_explosion')
 	enemy.connect('shoot', self , '_spawn_enemy_bullet')
 	## make sure we can destroy all enemies if we wish (this will be a pickup)
 	connect('destroy_all_enemies', enemy, '_on_destroy_all_enemies')
 	
 	add_child(enemy)
-
-
+	
 func _spawn_enemy_bullet(BulletScene, position, direction):
 
 
@@ -213,12 +212,9 @@ func _game_over():
 	_destroy_all_enemies()
 
 	## TODO have gameover screen and show that should be same as start screen, shouldnt just be bg of game
+	
 
-
-
-
-
-
-
-
+# TODO i need to be rcommented out just for testing
+#func _on_Timer_timeout():
+#	_on_SpawnManager_spawn(PPScene , Vector2(180, -70), {})
 

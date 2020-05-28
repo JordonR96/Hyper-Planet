@@ -12,7 +12,7 @@ radius = 13.6653
 radius = 13.0908
 height = 32.488
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "SDDead"
 length = 0.5
 tracks/0/type = "value"
@@ -66,7 +66,7 @@ shape = SubResource( 1 )
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" parent="." index="3"]
-anims/EDDead = SubResource( 5 )
+anims/EDDead = SubResource( 3 )
 anims/Fly = SubResource( 4 )
 
 [node name="Sprite" parent="." index="4"]
