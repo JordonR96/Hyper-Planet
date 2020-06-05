@@ -1,8 +1,8 @@
 
 # todo 
-# glow effe ct around the animatyion bneeds to be sorted didnt
-# have the issue iobn maC
 
+# 2. have a timer that sets random time around 5-8 mins when timeout cleear screen
+#  from main and add some pointas
 extends Node2D
 
 export(int, 1000) var y_axis_speed
@@ -97,6 +97,7 @@ func _start_game():
 	$Camera2D/HUD/GameOver.text = ''
 	
 	$ScoreTimer.start()
+	$Camera2D/HUD/SpawnManager._start()
 
 	# TODO should be function
 	player.start(player_start_position)
@@ -110,17 +111,13 @@ func _start_game():
 	_reset_backgrounds()
 	
 
-func _on_SpawnManager_spawn(EnemyScene, spawnPosition, optionalConfig):
+func _on_SpawnManager_spawn(EnemyScene, spawnPosition, spawnType):
 
 	# spawn type is top left or right
 	
 	var enemy = EnemyScene.instance()
 	spawnPosition.x = spawnPosition.x + $Camera2D.position.x
 	spawnPosition.y = spawnPosition.y + $Camera2D.position.y
-	
-	# for direction based enemies
-	if (optionalConfig.has('x_direction_name')):
-		enemy.x_direction_name = optionalConfig.x_direction_name
 	
 	enemy.position = spawnPosition
 	enemy.connect('add_explosion', self, '_on_add_explosion')
@@ -210,7 +207,7 @@ func _game_over():
 	# TODO time delay on this signal
 	
 	_destroy_all_enemies()
-
+	$Camera2D/HUD/SpawnManager._start()
 	## TODO have gameover screen and show that should be same as start screen, shouldnt just be bg of game
 	
 
