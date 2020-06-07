@@ -125,6 +125,9 @@ func _on_SpawnManager_spawn(EnemyScene, spawnPosition, spawnType):
 	## make sure we can destroy all enemies if we wish (this will be a pickup)
 	connect('destroy_all_enemies', enemy, '_on_destroy_all_enemies')
 	
+	if (enemy.has_method('set_target')):
+		enemy.set_target(player)
+	
 	add_child(enemy)
 	
 func _spawn_enemy_bullet(BulletScene, position, direction):

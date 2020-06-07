@@ -38,7 +38,7 @@ var BlockadeScene = [preload("res://EnemyScenes/LaserBlockade.tscn"), 'Laser Blo
 # top left or right
 var EDScene = [preload("res://EnemyScenes/ElectroDropship.tscn"), 'Electro Dropship']
 var MScene = [preload("res://EnemyScenes/Mech.tscn"), 'Mech']
-
+var HSScene = [preload("res://EnemyScenes/HomingShip.tscn"), 'Homing Ship']
 #Screen Size
 var screen_size
 
@@ -58,10 +58,10 @@ export (int) var noSpawnChance = 2
 export (float) var spawnTimerWaitTime = 2
 
 # unchanging master lists
-var  leftMasterList = [ MScene, EDScene]
-var  rightMasterList = [ MScene, EDScene]
+var  leftMasterList = [ MScene, EDScene, HSScene]
+var  rightMasterList = [ MScene, EDScene, HSScene]
 var  topMasterList = [BSScene, LBScene, CGScene,EPSScene, EPMScene
-, PPScene, BlockadeScene, EDScene, MScene]
+, PPScene, BlockadeScene, EDScene, MScene, HSScene]
 
 #active lists
 var leftActiveList = []
@@ -81,7 +81,9 @@ func _start():
 	
 	leftActiveList = leftMasterList
 	rightActiveList = rightMasterList
-	topActiveList = topMasterList
+	#uncomment me topActiveList = topMasterList
+	# TODO uncomment me topActiveList = topMasterList
+	topActiveList = [HSScene]
 	
 	 ## TODO reduce range of values for spawns so its centre of screen
 
