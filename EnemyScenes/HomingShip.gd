@@ -1,11 +1,8 @@
 extends 'Enemy.gd'
 
-#TODO it seeks but nor very well asnd doesnt travel in direction its facing
-
-
 var velocity = Vector2.ZERO
 var acceleration = Vector2.ZERO
-export var steer_force = 50.0
+export var rotation_speed = 20
 
 var target = null
 
@@ -13,12 +10,7 @@ func set_target( _target):
 	# add this line:
 	target = _target
 
-func seek():
-	var steer = Vector2.ZERO
-	if target:
-		var desired = (target.position - position).normalized() * speed
-		steer = (desired - velocity).normalized() * steer_force
-	return steer
+
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,9 +18,11 @@ func _ready():
 	$LifeTimer.wait_time = life_time
 	$LifeTimer.start()
 	$AnimationPlayer.play('Fly')
-	velocity = transform.y * speed
+	velocity =  Vector2(0, 1).rotated(rotation)
 	
 func _dead():
+	
+
 
 	if (!dead):
 		target = null
@@ -45,16 +39,19 @@ func _dead():
 
 	
 func _process(delta):
+	if (health > 0):
+		var desired_direction = target.global_position - global_position
+		desired_direction = desired_direction.normalized()
+		
+		var rotateAmount = desired_direction.cross(transform.y)
+		rotation -= rotateAmount * delta * rotation_speed
 	
-	print(rotation_degrees)
-	acceleration += seek()
-	velocity += acceleration * delta
-	velocity = velocity.clamped(speed)
-	rotation = velocity.angle()
-	position += velocity * delta
+		var velocity = Vector2(0, 1 ).rotated(rotation) * speed * delta
+		position += velocity
+
 	if (health <= 0 ):
 		_dead()
 		emit_signal("enemy_dead")
 		
-		##TODO make it home on player
+
 		

@@ -59,13 +59,15 @@ func _destroy_all_enemies ():
 	
 func _start_backgrounds():
 	#TODO background not resetting properly on gameover
+	
+	
 
 	Background1 = BackgroundScene.instance()
 	Background2 = BackgroundScene.instance()
 	Background3 = BackgroundScene.instance()
-	Background1.start(bg_tile_count_x, bg_tile_count_y, bg_tile_resolution, Vector2(0,0))
-	Background2.start(bg_tile_count_x, bg_tile_count_y, bg_tile_resolution, Vector2(0,(-1 * bg_tile_count_y * bg_tile_resolution)))
-	Background3.start(bg_tile_count_x, bg_tile_count_y, bg_tile_resolution, Vector2(0,(-2 * bg_tile_count_y * bg_tile_resolution)))
+	Background1.start(Vector2(180, 320))
+	Background2.start(Vector2(180,(320 - 640)))
+	Background3.start(Vector2(189,(320 - (2*640))))
 	add_child(Background1)
 	add_child(Background2)
 	add_child(Background3)
@@ -84,6 +86,8 @@ func _start_game():
 
 	player = playerScene.instance()
 	add_child(player)
+	
+	$Music.play()
 
 
 	## TODO make sure this rests the game properly on retry
@@ -200,6 +204,12 @@ func _game_over():
 	$Camera2D/HUD/ScoreLabel.hide()
 	$Camera2D/HUD/GameOver.show()
 	$Camera2D/HUD/GameOver.text = 'Game Over\n Score: ' + str(score)
+	
+	$Music.stop()
+	## TODOD here we play gameover tune
+	
+	
+	
 		## TODO emit a signal that all enemies/environment obj have that will cause them to die
 	#will need to connect that on instantiation, will use queue_free() to dleete
 	## TODO  show whole game over screen
@@ -218,3 +228,11 @@ func _game_over():
 #func _on_Timer_timeout():
 #	_on_SpawnManager_spawn(PPScene , Vector2(180, -70), {})
 
+
+
+
+
+
+func _on_Music_finished():
+	if has_node('Player'):
+		$Music.play()
