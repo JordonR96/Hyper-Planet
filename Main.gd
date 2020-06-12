@@ -67,7 +67,7 @@ func _start_backgrounds():
 	Background3 = BackgroundScene.instance()
 	Background1.start(Vector2(180, 320))
 	Background2.start(Vector2(180,(320 - 640)))
-	Background3.start(Vector2(189,(320 - (2*640))))
+	Background3.start(Vector2(180,(320 - (2*640))))
 	add_child(Background1)
 	add_child(Background2)
 	add_child(Background3)

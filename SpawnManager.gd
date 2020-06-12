@@ -60,6 +60,8 @@ export (float) var spawnTimerWaitTime = 2
 # unchanging master lists
 var  leftMasterList = [ MScene, EDScene, HSScene]
 var  rightMasterList = [ MScene, EDScene, HSScene]
+
+# TODO make sure all top list are able to be spawned seem to only get homing ship mech and ed
 var  topMasterList = [BSScene, LBScene, CGScene,EPSScene, EPMScene
 , PPScene, BlockadeScene, EDScene, MScene, HSScene]
 

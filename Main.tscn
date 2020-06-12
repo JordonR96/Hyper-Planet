@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir Caps.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Camera2D.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Music/MainTheme.wav" type="AudioStream" id=6]
+[ext_resource path="res://Background.tscn" type="PackedScene" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -23,7 +24,7 @@ font_data = ExtResource( 2 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
-y_axis_speed = 250
+y_axis_speed = 180
 player_start_position = Vector2( 180, 583 )
 score_increment = 25.0
 
@@ -75,6 +76,9 @@ wait_time = 1.75
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="Sprite" parent="." instance=ExtResource( 7 )]
+position = Vector2( 180, 320 )
 [connection signal="spawn" from="Camera2D/HUD/SpawnManager" to="." method="_on_SpawnManager_spawn"]
 [connection signal="pressed" from="Camera2D/HUD/StartButton" to="." method="_start_game"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
