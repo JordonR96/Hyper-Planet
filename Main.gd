@@ -11,7 +11,7 @@ export(Vector2) var player_start_position
 export(Vector2) var camera_start_position
 
 export(float) var score_increment
-
+export(int) var start_time_between_spawns =2
 
 var score = 0;
 
@@ -88,9 +88,6 @@ func _start_game():
 	add_child(player)
 	
 	$Music.play()
-
-
-	## TODO make sure this rests the game properly on retry
 	
 	# should be a function
 	score = 0
@@ -101,7 +98,11 @@ func _start_game():
 	$Camera2D/HUD/GameOver.text = ''
 	
 	$ScoreTimer.start()
-	$Camera2D/HUD/SpawnManager._start()
+	
+	_start_update_timer()
+	
+	## TODO need to pass in initial spawn settings here
+	$Camera2D/HUD/SpawnManager._start(start_time_between_spawns)
 
 	# TODO should be function
 	player.start(player_start_position)
@@ -109,7 +110,6 @@ func _start_game():
 	player.speed = y_axis_speed
 	player.connect('game_over', self, '_game_over')
 	player.connect('shoot', self, '_player_shoot')
-
 
 
 	_reset_backgrounds()
@@ -153,8 +153,7 @@ func _on_add_explosion(explosionScene, position):
 	add_child(explosion)
 
 func _player_shoot():
-	# TODO get player roatatoin, if player is rotated add a pixel amouun
-	# to lef tor right (depending on rotation direction) so it looks like 
+	
 	# bullets are coming staight from guns
 	var bullet1 = PlayerBulletScene.instance()
 	var bullet2 = PlayerBulletScene.instance()
@@ -169,9 +168,9 @@ func _player_shoot():
 	var bullet2position = Vector2( player.global_position.x - 20, player.global_position.y - 30)
 	bullet1.start(bullet1position, dir)
 	bullet2.start(bullet2position, dir)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
 		
 	if has_node('Player'):
 		
@@ -221,6 +220,8 @@ func _game_over():
 	
 	_destroy_all_enemies()
 	$Camera2D/HUD/SpawnManager._start()
+	
+	$SettingsUpdate.stop()
 	## TODO have gameover screen and show that should be same as start screen, shouldnt just be bg of game
 	
 
@@ -236,3 +237,10 @@ func _game_over():
 func _on_Music_finished():
 	if has_node('Player'):
 		$Music.play()
+
+func _start_update_timer():
+	$SettingsUpdate.set_wait_time(30)
+	$SettingsUpdate.start()
+	
+func _on_SettingsUpdate_timeout():
+	pass # Replace with function body.

@@ -79,7 +79,10 @@ stream = ExtResource( 6 )
 
 [node name="Sprite" parent="." instance=ExtResource( 7 )]
 position = Vector2( 180, 320 )
+
+[node name="SettingsUpdate" type="Timer" parent="."]
 [connection signal="spawn" from="Camera2D/HUD/SpawnManager" to="." method="_on_SpawnManager_spawn"]
 [connection signal="pressed" from="Camera2D/HUD/StartButton" to="." method="_start_game"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 [connection signal="finished" from="Music" to="." method="_on_Music_finished"]
+[connection signal="timeout" from="SettingsUpdate" to="." method="_on_SettingsUpdate_timeout"]

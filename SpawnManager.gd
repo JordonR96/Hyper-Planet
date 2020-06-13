@@ -53,9 +53,10 @@ export (int) var topChance = 60
 export (int) var leftChance = 19
 export (int) var rightChance = 19
 export (int) var noSpawnChance = 2
-
+export (int) var dualSpawnChance = 5
+export (int) var tripleSpawnChance = 25
 # Time between each spawn in seconds, will change during game
-export (float) var spawnTimerWaitTime = 2
+var spawnTimerWaitTime = 2
 
 # unchanging master lists
 var  leftMasterList = [ MScene, EDScene, HSScene]
@@ -78,7 +79,7 @@ signal spawn
 func _ready():
 	pass
 # Called when the node enters the scene tree for the first time.
-func _start():
+func _start(start_time_between_spawns):
 	screen_size = get_viewport_rect().size
 	
 	leftActiveList = leftMasterList
@@ -97,8 +98,17 @@ func _start():
 		rightSpawnPoints.append(Vector2(360, i))
 		leftSpawnPoints.append(Vector2(-20, i))
 	
-	$Timer.set_wait_time(spawnTimerWaitTime)
+	$Timer.set_wait_time(start_time_between_spawns)
 	$Timer.start()
+	
+func update_spawn_settings(timeIncrease, dualChanceincrease, tripleChanceincrease):
+	$Timer.stop()
+	dualSpawnChance += dualChanceincrease
+	tripleSpawnChance += tripleChanceincrease
+	
+	$Timer.set_wait_time(spawnTimerWaitTime + timeIncrease)
+	$Timer.start()
+	## TODO set limit on these
 
 func _stop ():
 	$Timer.stop()
@@ -117,6 +127,7 @@ func _spawn():
 	var spawnPosition 
 	var spawnConfig = {}
 	var spawnType
+	## TODO calc i fdouble spawning then triples spawning and do that in a way that works
 	
 	if (spawnState == 'Master'):
 		
