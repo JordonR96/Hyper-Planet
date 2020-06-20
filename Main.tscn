@@ -81,6 +81,7 @@ stream = ExtResource( 6 )
 position = Vector2( 180, 320 )
 
 [node name="SettingsUpdate" type="Timer" parent="."]
+one_shot = true
 [connection signal="spawn" from="Camera2D/HUD/SpawnManager" to="." method="_on_SpawnManager_spawn"]
 [connection signal="pressed" from="Camera2D/HUD/StartButton" to="." method="_start_game"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]

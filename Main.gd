@@ -5,6 +5,8 @@
 #  from main and add some pointas
 extends Node2D
 
+var rand_generate = RandomNumberGenerator.new()
+
 export(int, 1000) var y_axis_speed
 
 export(Vector2) var player_start_position
@@ -219,7 +221,7 @@ func _game_over():
 	# TODO time delay on this signal
 	
 	_destroy_all_enemies()
-	$Camera2D/HUD/SpawnManager._start()
+	$Camera2D/HUD/SpawnManager._stop()
 	
 	$SettingsUpdate.stop()
 	## TODO have gameover screen and show that should be same as start screen, shouldnt just be bg of game
@@ -239,8 +241,16 @@ func _on_Music_finished():
 		$Music.play()
 
 func _start_update_timer():
-	$SettingsUpdate.set_wait_time(30)
+	$SettingsUpdate.set_wait_time(20)
 	$SettingsUpdate.start()
 	
 func _on_SettingsUpdate_timeout():
-	pass # Replace with function body.
+	print('updating stuf')
+	
+	## TODO need fully testing
+	rand_generate.randomize()
+	y_axis_speed += rand_generate.randi_range(5, 20)
+	$Camera2D/HUD/SpawnManager.update_spawn_settings(1, 5, 5)
+	rand_generate.randomize()
+	$SettingsUpdate.set_wait_time(rand_generate.randi_range(20, 40))
+	$SettingsUpdate.start()

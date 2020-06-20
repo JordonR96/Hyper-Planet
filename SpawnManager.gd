@@ -32,6 +32,8 @@ var EPMScene = [preload("res://EnemyScenes/ElectroPodMed.tscn"), 'ElectroPod Med
 var EPLScene = [preload("res://EnemyScenes/ElectroPodLong.tscn"), 'ElectroPod Large']
 var PPScene = [preload("res://EnemyScenes/PulsePod.tscn"),  'Pulse Pod']
 
+
+
 # top should probably set stricter limit on this ones position
 var BlockadeScene = [preload("res://EnemyScenes/LaserBlockade.tscn"), 'Laser Blockade']
 
@@ -54,9 +56,9 @@ export (int) var leftChance = 19
 export (int) var rightChance = 19
 export (int) var noSpawnChance = 2
 export (int) var dualSpawnChance = 5
-export (int) var tripleSpawnChance = 25
+export (int) var tripleSpawnChance = 10
 # Time between each spawn in seconds, will change during game
-var spawnTimerWaitTime = 2
+var spawnTimerWaitTime = 5
 
 # unchanging master lists
 var  leftMasterList = [ MScene, EDScene, HSScene]
@@ -84,9 +86,8 @@ func _start(start_time_between_spawns):
 	
 	leftActiveList = leftMasterList
 	rightActiveList = rightMasterList
-	#uncomment me topActiveList = topMasterList
-	# TODO uncomment me topActiveList = topMasterList
-	topActiveList = [HSScene]
+
+	topActiveList = topMasterList
 	
 	 ## TODO reduce range of values for spawns so its centre of screen
 
@@ -99,14 +100,17 @@ func _start(start_time_between_spawns):
 		leftSpawnPoints.append(Vector2(-20, i))
 	
 	$Timer.set_wait_time(start_time_between_spawns)
+	## TODO export vars should be separate and then we update initials here
+	dualSpawnChance = 5
+	tripleSpawnChance = 10
 	$Timer.start()
 	
-func update_spawn_settings(timeIncrease, dualChanceincrease, tripleChanceincrease):
+func update_spawn_settings(timeDecrease, dualChanceincrease, tripleChanceincrease):
 	$Timer.stop()
-	dualSpawnChance += dualChanceincrease
-	tripleSpawnChance += tripleChanceincrease
+	dualSpawnChance = clamp(dualSpawnChance + dualChanceincrease, 0, 100) 
+	tripleSpawnChance =  clamp(tripleSpawnChance + tripleChanceincrease, 0, 100) 
 	
-	$Timer.set_wait_time(spawnTimerWaitTime + timeIncrease)
+	$Timer.set_wait_time(clamp(spawnTimerWaitTime - timeDecrease, 2 , 5))
 	$Timer.start()
 	## TODO set limit on these
 
@@ -151,11 +155,10 @@ func _spawn():
 			rand_generate.randomize()
 			var randomTopPositionIndex = rand_generate.randi_range(0, topSpawnPoints.size()- 1)
 			spawnPosition = topSpawnPoints[randomTopPositionIndex]
-			
+			spawnType = 'Top'
 			if (enemyToSpawn[1] == 'Laser Blockade'):
-				print('Laser Blockade')
 				spawnPosition = Vector2(screen_size.x/2, spawnPosition.y)
-				spawnType = 'Top'
+
 		#spanwing on the left
 		elif (randomNumber > topChance and randomNumber  <= topAddLeft):
 			rand_generate.randomize()
@@ -199,15 +202,71 @@ func _spawn():
 			if (enemyToSpawn[1] == 'Laser Blockade'):
 				print('Laser Blockade')
 				spawnPosition = Vector2(screen_size.x/2, spawnPosition.y)
-				spawnType = 'Top'
+			
 		
 		else:
 			spawningEnemy = false
 		
 	if (spawningEnemy):
 		
-		## The actual enemy scene exists in 0th index of enemytospawn
+		var dualSpawn = false
+		
+				## The actual enemy scene exists in 0th index of enemytospawn
 		emit_signal("spawn", enemyToSpawn[0], spawnPosition,spawnType)
+		## ban  'ElectroPod Small' mred and largee, lasr blockade from dueal spawn
+		
+		var allowMultipleSpawn = true
+		
+		var enemyName = enemyToSpawn[1]
+		
+		if (enemyName == 'ElectroPod Small' or enemyName == 'ElectroPod Medium' or enemyName == 'ElectroPod Large' or enemyName == 'Laser Blockade'):
+			allowMultipleSpawn = false
+		
+		
+		if (allowMultipleSpawn):
+			
+			# choose spanw position
+			rand_generate.randomize()
+			var dualSpawnRandomNumber = rand_generate.randi_range(0, 100)
+			
+			if (dualSpawnRandomNumber <= dualSpawnChance):
+				dualSpawn = true
+			
+			if (dualSpawn and spawnType != null):
+				
+				var dualSpawnPosition
+				
+				rand_generate.randomize()
+				
+	
+				if (spawnType == 'Left' or spawnType == 'Right'):
+					
+					dualSpawnPosition=  Vector2(spawnPosition.x, spawnPosition.y - rand_generate.randi_range(60, 160) )
+					
+				elif(spawnType == 'Top'):
+					
+					dualSpawnPosition =  Vector2(spawnPosition.x + rand_generate.randi_range(60, 160), spawnPosition.y )
+		
+				emit_signal("spawn", enemyToSpawn[0], dualSpawnPosition, spawnType)
+				var tripleSpawn = false
+				# choose spanw position
+				rand_generate.randomize()
+				var tripleSpawnRandomNumber = rand_generate.randi_range(0, 100)
+				
+				if (tripleSpawnRandomNumber <= tripleSpawnChance):
+					
+					rand_generate.randomize()
+					var tripleSpawnPosition
+					if (spawnType == 'Left' or spawnType == 'Right'):
+						
+						tripleSpawnPosition=  Vector2(spawnPosition.x, spawnPosition.y - rand_generate.randi_range(60, 160) )
+						
+					elif(spawnType == 'Top'):
+						
+						tripleSpawnPosition =  Vector2(spawnPosition.x + rand_generate.randi_range(60, 160), spawnPosition.y )
+						
+					emit_signal("spawn", enemyToSpawn[0], tripleSpawnPosition ,spawnType)
+				
 		
 		# spawn connecting function in main
 		# _on_SpawnManager_spawn(EnemyScene, spawnPosition, spawnType)
