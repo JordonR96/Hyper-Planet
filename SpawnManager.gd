@@ -105,10 +105,11 @@ func _start(start_time_between_spawns):
 	tripleSpawnChance = 10
 	$Timer.start()
 	
+	
 func update_spawn_settings(timeDecrease, dualChanceincrease, tripleChanceincrease):
 	$Timer.stop()
-	dualSpawnChance = clamp(dualSpawnChance + dualChanceincrease, 0, 100) 
-	tripleSpawnChance =  clamp(tripleSpawnChance + tripleChanceincrease, 0, 100) 
+	dualSpawnChance = clamp(dualSpawnChance + dualChanceincrease, 0, 70) 
+	tripleSpawnChance =  clamp(tripleSpawnChance + tripleChanceincrease, 0, 70) 
 	
 	$Timer.set_wait_time(clamp(spawnTimerWaitTime - timeDecrease, 2 , 5))
 	$Timer.start()

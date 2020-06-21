@@ -19,6 +19,12 @@ var score = 0;
 
 var screen_size
 
+
+var sound = true
+var soundOnImagePath = preload('res://Art/BG/sound_icon.png')
+var soundOffImagePath = preload('res://Art/BG/sound_icon_mute.png')
+
+
 var player_speed 
 export (int) var bg_tile_count_x = 6
 export (int) var bg_tile_count_y = 10
@@ -44,6 +50,9 @@ var playing
 signal destroy_all_enemies
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Camera2D/HUD/MuteButton.set_button_icon(soundOnImagePath)
+	$Camera2D/HUD/MuteButton.disabled = true
+	
 	playing = false
 	$Camera2D.make_current();
 	screen_size = get_viewport_rect().size
@@ -89,17 +98,21 @@ func _start_game():
 	player = playerScene.instance()
 	add_child(player)
 	
-	$Music.play()
+	$Camera2D/HUD/MuteButton.disabled = false
+	if (sound):
+		$Music.play()
 	
 	# should be a function
 	score = 0
 	$Camera2D/HUD/ScoreLabel.text = str(score)
 	$Camera2D/HUD/ScoreLabel.show()
 	$Camera2D/HUD/StartButton.hide()
+	$Camera2D/HUD/MenuSprite.visible = false
 	$Camera2D/HUD/GameOver.hide()
 	$Camera2D/HUD/GameOver.text = ''
 	
 	$ScoreTimer.start()
+	
 	
 	_start_update_timer()
 	
@@ -205,7 +218,7 @@ func _game_over():
 	$Camera2D/HUD/ScoreLabel.hide()
 	$Camera2D/HUD/GameOver.show()
 	$Camera2D/HUD/GameOver.text = 'Game Over\n Score: ' + str(score)
-	
+	$Camera2D/HUD/MuteButton.disabled = true
 	$Music.stop()
 	## TODOD here we play gameover tune
 	
@@ -215,6 +228,7 @@ func _game_over():
 	#will need to connect that on instantiation, will use queue_free() to dleete
 	## TODO  show whole game over screen
 	$Camera2D/HUD/StartButton.show()
+	$Camera2D/HUD/MenuSprite.visible = true
 	$Camera2D/HUD/StartButton.text = 'Retry'
 	$Camera2D.start(camera_start_position)
 	
@@ -237,7 +251,7 @@ func _game_over():
 
 
 func _on_Music_finished():
-	if has_node('Player'):
+	if has_node('Player') && sound:
 		$Music.play()
 
 func _start_update_timer():
@@ -250,7 +264,21 @@ func _on_SettingsUpdate_timeout():
 	## TODO need fully testing
 	rand_generate.randomize()
 	y_axis_speed += rand_generate.randi_range(5, 20)
-	$Camera2D/HUD/SpawnManager.update_spawn_settings(1, 5, 5)
+	$Camera2D/HUD/SpawnManager.update_spawn_settings(1, 10, 5)
 	rand_generate.randomize()
 	$SettingsUpdate.set_wait_time(rand_generate.randi_range(20, 40))
 	$SettingsUpdate.start()
+
+	
+
+func _on_MuteButton_pressed():
+
+	sound = !sound
+	
+	if (sound):
+		$Camera2D/HUD/MuteButton.set_button_icon(soundOnImagePath)
+		$Music.play()
+	elif(!sound):
+		$Camera2D/HUD/MuteButton.set_button_icon(soundOffImagePath)
+		$Music.stop()
+	

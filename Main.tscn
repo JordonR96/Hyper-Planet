@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir Caps.ttf" type="DynamicFontData" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Music/MainTheme.wav" type="AudioStream" id=6]
 [ext_resource path="res://Background.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Art/BG/menu.png" type="Texture" id=8]
+[ext_resource path="res://Art/BG/sound_icon.png" type="Texture" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -71,6 +73,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MenuSprite" type="Sprite" parent="Camera2D/HUD"]
+position = Vector2( 180, 320 )
+z_index = -6
+texture = ExtResource( 8 )
+
+[node name="MuteButton" type="Button" parent="Camera2D/HUD"]
+margin_left = 283.531
+margin_top = 1.43198
+margin_right = 359.531
+margin_bottom = 71.432
+icon = ExtResource( 9 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ScoreTimer" type="Timer" parent="."]
 wait_time = 1.75
 
@@ -84,6 +102,7 @@ position = Vector2( 180, 320 )
 one_shot = true
 [connection signal="spawn" from="Camera2D/HUD/SpawnManager" to="." method="_on_SpawnManager_spawn"]
 [connection signal="pressed" from="Camera2D/HUD/StartButton" to="." method="_start_game"]
+[connection signal="pressed" from="Camera2D/HUD/MuteButton" to="." method="_on_MuteButton_pressed"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 [connection signal="finished" from="Music" to="." method="_on_Music_finished"]
 [connection signal="timeout" from="SettingsUpdate" to="." method="_on_SettingsUpdate_timeout"]
