@@ -7,7 +7,9 @@ extends Node2D
 
 var rand_generate = RandomNumberGenerator.new()
 
-export(int, 1000) var y_axis_speed
+export(int, 1000) var initial_y_axis_speed
+
+
 
 export(Vector2) var player_start_position
 export(Vector2) var camera_start_position
@@ -122,7 +124,7 @@ func _start_game():
 	# TODO should be function
 	player.start(player_start_position)
 	player.global_rotation = 0
-	player.speed = y_axis_speed
+	player.speed = initial_y_axis_speed
 	player.connect('game_over', self, '_game_over')
 	player.connect('shoot', self, '_player_shoot')
 
@@ -259,17 +261,14 @@ func _start_update_timer():
 	$SettingsUpdate.start()
 	
 func _on_SettingsUpdate_timeout():
-	print('updating stuf')
-	
 	## TODO need fully testing
 	rand_generate.randomize()
-	y_axis_speed += rand_generate.randi_range(5, 20)
+	player.speed  = clamp(player.speed + rand_generate.randi_range(10, 30),0, 300)
+	print('speed' + str(player.speed))
 	$Camera2D/HUD/SpawnManager.update_spawn_settings(1, 10, 5)
 	rand_generate.randomize()
-	$SettingsUpdate.set_wait_time(rand_generate.randi_range(20, 40))
+	$SettingsUpdate.set_wait_time(rand_generate.randi_range(20, 30))
 	$SettingsUpdate.start()
-
-	
 
 func _on_MuteButton_pressed():
 

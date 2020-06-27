@@ -1,18 +1,4 @@
 extends Node2D
-#NOT WORKING
-#NOT WORKING
-
-# TODO 
-
-# 2. bevery minute have a chance to change the active listy to just contain 
-# laser blockades or pulkse pods or electro pods () maybe mixture
-# this should set this for maybe 20-30 seconds then revert back to maSTER list
-# WOULD NEED TO LIMIT THE OPTIONS TO TOP LIST
-# 3. need to make it consistently spawn stuff that makes a challenge,
-# instead of increasing spawn frequency increase amount of selected enemy to spawn]
-# have chance to spwn 2/ 3 of enemy as time goes on the chance increases
-#
-
 
 var rand_generate = RandomNumberGenerator.new()
 
@@ -66,7 +52,7 @@ var  rightMasterList = [ MScene, EDScene, HSScene]
 
 # TODO make sure all top list are able to be spawned seem to only get homing ship mech and ed
 var  topMasterList = [BSScene, LBScene, CGScene,EPSScene, EPMScene
-, PPScene, BlockadeScene, EDScene, MScene, HSScene]
+, PPScene, BlockadeScene, EDScene, MScene, EPSScene, HSScene, EPMScene]
 
 #active lists
 var leftActiveList = []
@@ -108,11 +94,15 @@ func _start(start_time_between_spawns):
 	
 func update_spawn_settings(timeDecrease, dualChanceincrease, tripleChanceincrease):
 	$Timer.stop()
-	dualSpawnChance = clamp(dualSpawnChance + dualChanceincrease, 0, 70) 
-	tripleSpawnChance =  clamp(tripleSpawnChance + tripleChanceincrease, 0, 70) 
+	dualSpawnChance = clamp(dualSpawnChance + dualChanceincrease, 0, 90) 
+	tripleSpawnChance =  clamp(tripleSpawnChance + tripleChanceincrease, 0, 90) 
 	
-	$Timer.set_wait_time(clamp(spawnTimerWaitTime - timeDecrease, 2 , 5))
+	$Timer.set_wait_time(clamp($Timer.wait_time - timeDecrease,1 , 5))
 	$Timer.start()
+	
+	print('Dual Spawn Chance' + str(dualSpawnChance))
+	print('Triple SPawn Change' + str(tripleSpawnChance))
+	print('spawnTimer' + str($Timer.wait_time))
 	## TODO set limit on these
 
 func _stop ():
@@ -201,7 +191,7 @@ func _spawn():
 			spawnPosition = topSpawnPoints[randomTopPositionIndex]
 			
 			if (enemyToSpawn[1] == 'Laser Blockade'):
-				print('Laser Blockade')
+
 				spawnPosition = Vector2(screen_size.x/2, spawnPosition.y)
 			
 		

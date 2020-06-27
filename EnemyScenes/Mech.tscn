@@ -355,10 +355,11 @@ tracks/3/keys = {
 }
 
 [node name="Enemy" instance=ExtResource( 1 )]
-position = Vector2( 0, 0 )
+position = Vector2( 0.145714, -0.145714 )
 collision_mask = 21
 script = ExtResource( 5 )
-speed = 20
+speed = 35
+life_time = 6.0
 dead_animation_name = "MechDead"
 explosion = ExtResource( 4 )
 use_explosion = "Yes"

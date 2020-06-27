@@ -26,7 +26,7 @@ font_data = ExtResource( 2 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
-y_axis_speed = 180
+initial_y_axis_speed = 180
 player_start_position = Vector2( 180, 583 )
 score_increment = 25.0
 
@@ -50,10 +50,10 @@ __meta__ = {
 }
 
 [node name="ScoreLabel" type="Label" parent="Camera2D/HUD"]
-margin_left = 4.77298
-margin_top = 43.6638
-margin_right = 72.773
-margin_bottom = 57.6638
+margin_left = 4.06589
+margin_top = 54.2704
+margin_right = 72.0659
+margin_bottom = 68.2704
 custom_fonts/font = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
