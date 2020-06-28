@@ -159,6 +159,7 @@ func _spawn_enemy_bullet(BulletScene, position, direction):
 	bullet.connect('add_explosion', self, '_on_add_explosion')
 	
 	bullet.start(position, direction)
+	# TODO if not mutied play bullet sound on start
 	connect('destroy_all_enemies', bullet, '_on_destroy_all_enemies')
 	add_child(bullet)
 	
@@ -168,12 +169,14 @@ func _on_add_explosion(explosionScene, position):
 
 	explosion.position = position
 	add_child(explosion)
+	# TODO if not mutied play explosion sound on start
 
 func _player_shoot():
 	
 	# bullets are coming staight from guns
 	var bullet1 = PlayerBulletScene.instance()
 	var bullet2 = PlayerBulletScene.instance()
+
 	add_child(bullet1)
 	add_child(bullet2)
 	var dir = Vector2(0,-1).rotated(player.global_rotation)
@@ -185,6 +188,7 @@ func _player_shoot():
 	var bullet2position = Vector2( player.global_position.x - 20, player.global_position.y - 30)
 	bullet1.start(bullet1position, dir)
 	bullet2.start(bullet2position, dir)
+	# TODO if not mutied play bullet sound on start
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
