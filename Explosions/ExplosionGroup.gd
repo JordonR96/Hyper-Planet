@@ -5,6 +5,8 @@ export (PackedScene) var Explosion3Scene
 export (bool) var using_3
 export (float) var timer_1_time
 export (float) var timer_2_time
+
+var sound = false
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -17,6 +19,9 @@ func _ready():
 	add_child(Explosion1)
 	$Timer.wait_time = timer_1_time
 	$Timer.start()
+	
+	if (sound):
+		Explosion1.play_sound()
 	
 	pass # Replace with function body.
 
@@ -33,6 +38,8 @@ func _on_Timer_timeout():
 	if (using_3):
 		$Timer2.wait_time = timer_2_time
 		$Timer2.start()
+	if (sound):
+		Explosion2.play_sound()
 
 
 func _on_LifeTime_timeout():
@@ -43,3 +50,5 @@ func _on_Timer2_timeout():
 	var Explosion3 = Explosion1Scene.instance()
 	Explosion3.position.x += 70
 	add_child(Explosion3)
+	if (sound):
+		Explosion3.play_sound()

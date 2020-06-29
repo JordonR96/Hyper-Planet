@@ -159,6 +159,9 @@ func _spawn_enemy_bullet(BulletScene, position, direction):
 	bullet.connect('add_explosion', self, '_on_add_explosion')
 	
 	bullet.start(position, direction)
+	
+	if (sound):
+		bullet.play_sound();
 	# TODO if not mutied play bullet sound on start
 	connect('destroy_all_enemies', bullet, '_on_destroy_all_enemies')
 	add_child(bullet)
@@ -166,6 +169,7 @@ func _spawn_enemy_bullet(BulletScene, position, direction):
 func _on_add_explosion(explosionScene, position):
 
 	var explosion = explosionScene.instance()
+	explosion.sound = sound
 
 	explosion.position = position
 	add_child(explosion)
@@ -180,6 +184,9 @@ func _player_shoot():
 	add_child(bullet1)
 	add_child(bullet2)
 	var dir = Vector2(0,-1).rotated(player.global_rotation)
+	if (sound):
+		bullet1.play_sound();
+		bullet2.play_sound()
 	
 	## TODO have ability to change bullet velcotiy form console
 	## todo do this in more clever way

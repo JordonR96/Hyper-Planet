@@ -1,10 +1,16 @@
 extends 'res://EnemyScenes/Enemy.gd'
+var sound = false
 
 export (String) var animation_name 
+
+func play_sound():
+	if (sound):
+		$AudioStreamPlayer2D.play()
 
 func _ready():
 
 	$AnimationPlayer.play(animation_name)
+	play_sound()
 ## TODO need connecting signal from main that when called will just que free
 func _on_destroy_all_enemies():
 	pass

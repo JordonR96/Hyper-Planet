@@ -12,6 +12,11 @@ export (String, 'Yes', 'No') var delete_on_collision = 'Yes'
 signal add_explosion
 # Called when thex node enters the scene tree for the first time.
 
+func play_sound():
+	$Sound.play()
+
+
+
 func start(_position, _direction):
 	position = _position
 	rotation = _direction.angle() + PI/2
