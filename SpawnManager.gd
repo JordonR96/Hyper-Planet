@@ -51,8 +51,8 @@ var  leftMasterList = [ MScene, EDScene, HSScene]
 var  rightMasterList = [ MScene, EDScene, HSScene]
 
 # TODO make sure all top list are able to be spawned seem to only get homing ship mech and ed
-var  topMasterList = [BSScene, LBScene, CGScene,EPSScene, EPMScene
-, PPScene, BlockadeScene, EDScene, MScene, EPSScene, HSScene, EPMScene]
+var  topMasterList = [BSScene, LBScene, CGScene,EPSScene, EPSScene
+, PPScene, BlockadeScene, EDScene, MScene, EPSScene, HSScene, EPSScene]
 
 #active lists
 var leftActiveList = []

@@ -9,12 +9,19 @@ script = ExtResource( 3 )
 
 [node name="Pod1" parent="." index="0"]
 position = Vector2( -0.641602, -160.815 )
+life_time = 7.0
 
 [node name="Pod2" parent="." index="1"]
 position = Vector2( 1.1084, 159.185 )
+life_time = 7.0
+
+[node name="Beam" parent="." index="2"]
+life_time = 7.0
 
 [node name="Beam2" parent="." index="3" instance=ExtResource( 2 )]
 position = Vector2( -0.451996, 90.598 )
+life_time = 7.0
 
 [node name="Beam3" parent="." index="4" instance=ExtResource( 2 )]
 position = Vector2( 0.0480042, -91.902 )
+life_time = 7.0

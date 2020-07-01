@@ -143,6 +143,10 @@ func _on_SpawnManager_spawn(EnemyScene, spawnPosition, spawnType):
 	enemy.position = spawnPosition
 	enemy.connect('add_explosion', self, '_on_add_explosion')
 	enemy.connect('shoot', self , '_spawn_enemy_bullet')
+	
+	# TODO figure out sound for enemies
+	
+	
 	## make sure we can destroy all enemies if we wish (this will be a pickup)
 	connect('destroy_all_enemies', enemy, '_on_destroy_all_enemies')
 	

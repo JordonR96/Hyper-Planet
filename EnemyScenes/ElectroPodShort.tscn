@@ -13,10 +13,13 @@ __meta__ = {
 [node name="Pod1" parent="." instance=ExtResource( 2 )]
 position = Vector2( -0.141602, -67.8147 )
 rotation = -1.5708
+life_time = 7.0
 
 [node name="Pod2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0.108398, 68.1853 )
 rotation = 1.5708
+life_time = 7.0
 
 [node name="Beam" parent="." instance=ExtResource( 1 )]
 position = Vector2( 0, 0 )
+life_time = 7.0

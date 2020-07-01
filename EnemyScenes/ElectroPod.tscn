@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://EnemyScenes/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Art/enemies/electro-pod/electropods.png" type="Texture" id=2]
 [ext_resource path="res://EnemyScenes/ElectroPod.gd" type="Script" id=3]
+[ext_resource path="res://Sounds/ElectroPod.wav" type="AudioStream" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 29.8426
@@ -39,3 +40,7 @@ anims/On = SubResource( 2 )
 position = Vector2( 3.35876, 1.06066 )
 texture = ExtResource( 2 )
 hframes = 2
+
+[node name="AudioStreamPlayer2D" parent="." index="4"]
+stream = ExtResource( 4 )
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_AudioStreamPlayer2D_finished"]

@@ -1,8 +1,10 @@
 extends "Enemy.gd"
 
+var repeat_ambient_sound = true;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 func _on_LaserBlockade_visibility_changed():
 	if (visible):
@@ -25,10 +27,16 @@ func _on_Beam_area_entered(area):
 func _on_AnimationPlayer_animation_finished(anim_name):
 
 	if (anim_name == dead_animation_name):
+		repeat_ambient_sound = false
 		$AnimationPlayer.play('LaserBlockadeOff')
+		
 
 	if (anim_name ==  'LaserBlockadeStart'):
 		$AnimationPlayer.play('LaserBlockadeOn')
+
+
+
+
 
 
 
