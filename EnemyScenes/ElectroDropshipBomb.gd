@@ -3,7 +3,7 @@ extends 'res://Bullet.gd'
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimationPlayer.play('Off')
-	$Sound.play()
+	
 	pass # Replace with function body.
 
 func _on_OnTimer_timeout():

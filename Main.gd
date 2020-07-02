@@ -286,6 +286,7 @@ func _on_SettingsUpdate_timeout():
 	$SettingsUpdate.start()
 
 func _on_MuteButton_pressed():
+	$Camera2D/HUD/MuteButton.release_focus()
 
 	sound = !sound
 	
