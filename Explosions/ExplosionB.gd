@@ -1,4 +1,4 @@
-extends 'ExplosionA'
+extends 'ExplosionA.gd'
 
 
 # Declare member variables here. Examples:

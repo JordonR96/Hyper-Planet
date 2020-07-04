@@ -57,3 +57,7 @@ autostart = false
 
 [node name="AudioStreamPlayer2D" parent="." index="4"]
 stream = ExtResource( 4 )
+
+[node name="HitBoxTimer" type="Timer" parent="." index="5"]
+wait_time = 0.5
+[connection signal="timeout" from="HitBoxTimer" to="." method="_on_HitBoxTimer_timeout"]

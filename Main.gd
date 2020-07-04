@@ -53,7 +53,7 @@ signal destroy_all_enemies
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Camera2D/HUD/MuteButton.set_button_icon(soundOnImagePath)
-	$Camera2D/HUD/MuteButton.disabled = true
+
 	
 	playing = false
 	$Camera2D.make_current();
@@ -100,7 +100,7 @@ func _start_game():
 	player = playerScene.instance()
 	add_child(player)
 	
-	$Camera2D/HUD/MuteButton.disabled = false
+
 	if (sound):
 		$Music.play()
 	
@@ -235,7 +235,6 @@ func _game_over():
 	$Camera2D/HUD/ScoreLabel.hide()
 	$Camera2D/HUD/GameOver.show()
 	$Camera2D/HUD/GameOver.text = 'Game Over\n Score: ' + str(score)
-	$Camera2D/HUD/MuteButton.disabled = true
 	$Music.stop()
 	## TODOD here we play gameover tune
 	
