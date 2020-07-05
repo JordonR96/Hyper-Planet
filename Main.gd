@@ -1,7 +1,4 @@
 
-# todo 
-
-# 2. have a timer that sets random time around 5-8 mins when timeout cleear screen
 #  from main and add some pointas
 extends Node2D
 
@@ -18,6 +15,7 @@ export(float) var score_increment
 export(int) var start_time_between_spawns =2
 
 var score = 0;
+
 
 var screen_size
 
@@ -53,18 +51,13 @@ signal destroy_all_enemies
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Camera2D/HUD/MuteButton.set_button_icon(soundOnImagePath)
-
-	
 	playing = false
 	$Camera2D.make_current();
 	screen_size = get_viewport_rect().size
 	_start_backgrounds()
-	## TODO make this a func so can call it when retry is pressed
-	# so can reset backgrounds to begginining
-	# manage backgrounds
-	
 	$Camera2D/HUD/GameOver.hide()
 	
+
 func _destroy_all_enemies ():
 	## calling this function will remove all enemy and enemy bullets from screen
 	
@@ -110,6 +103,7 @@ func _start_game():
 	$Camera2D/HUD/ScoreLabel.show()
 	$Camera2D/HUD/StartButton.hide()
 	$Camera2D/HUD/MenuSprite.visible = false
+	$Camera2D/HUD/highScore.hide()
 	$Camera2D/HUD/GameOver.hide()
 	$Camera2D/HUD/GameOver.text = ''
 	
@@ -235,6 +229,12 @@ func _game_over():
 	$Camera2D/HUD/ScoreLabel.hide()
 	$Camera2D/HUD/GameOver.show()
 	$Camera2D/HUD/GameOver.text = 'Game Over\n Score: ' + str(score)
+	
+	if score > game.high_score:
+		game.high_score = score
+		$Camera2D/HUD/highScore.reload()
+	
+	$Camera2D/HUD/highScore.show()
 	$Music.stop()
 	## TODOD here we play gameover tune
 	
