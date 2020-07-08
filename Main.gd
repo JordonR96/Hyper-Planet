@@ -56,6 +56,9 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	_start_backgrounds()
 	$Camera2D/HUD/GameOver.hide()
+	$Camera2D/HUD/TouchScreenButtonLeft.visible = false
+	$Camera2D/HUD/TouchScreenButtonRight.visible = false
+	$Camera2D/HUD/TouchScreenButtonShoot.visible = false
 	
 
 func _destroy_all_enemies ():
@@ -64,10 +67,7 @@ func _destroy_all_enemies ():
 	emit_signal("destroy_all_enemies")
 	
 func _start_backgrounds():
-	#TODO background not resetting properly on gameover
 	
-	
-
 	Background1 = BackgroundScene.instance()
 	Background2 = BackgroundScene.instance()
 	Background3 = BackgroundScene.instance()
@@ -107,6 +107,9 @@ func _start_game():
 	$Camera2D/HUD/GameOver.hide()
 	$Camera2D/HUD/GameOver.text = ''
 	
+	$Camera2D/HUD/TouchScreenButtonLeft.visible = true
+	$Camera2D/HUD/TouchScreenButtonRight.visible = true
+	$Camera2D/HUD/TouchScreenButtonShoot.visible = true
 	$ScoreTimer.start()
 	
 	
@@ -137,8 +140,9 @@ func _on_SpawnManager_spawn(EnemyScene, spawnPosition, spawnType):
 	enemy.position = spawnPosition
 	enemy.connect('add_explosion', self, '_on_add_explosion')
 	enemy.connect('shoot', self , '_spawn_enemy_bullet')
-	
-	# TODO figure out sound for enemies
+	if (sound):
+		if (enemy.uses_sound == 'Yes' ):
+			enemy.sound = true
 	
 	
 	## make sure we can destroy all enemies if we wish (this will be a pickup)
@@ -151,7 +155,6 @@ func _on_SpawnManager_spawn(EnemyScene, spawnPosition, spawnType):
 	
 func _spawn_enemy_bullet(BulletScene, position, direction):
 
-
 	var bullet = BulletScene.instance();
 	
 	bullet.connect('add_explosion', self, '_on_add_explosion')
@@ -160,7 +163,7 @@ func _spawn_enemy_bullet(BulletScene, position, direction):
 	
 	if (sound):
 		bullet.play_sound();
-	# TODO if not mutied play bullet sound on start
+
 	connect('destroy_all_enemies', bullet, '_on_destroy_all_enemies')
 	add_child(bullet)
 	
@@ -171,7 +174,7 @@ func _on_add_explosion(explosionScene, position):
 
 	explosion.position = position
 	add_child(explosion)
-	# TODO if not mutied play explosion sound on start
+
 
 func _player_shoot():
 	
@@ -185,15 +188,11 @@ func _player_shoot():
 	if (sound):
 		bullet1.play_sound();
 		bullet2.play_sound()
-	
-	## TODO have ability to change bullet velcotiy form console
-	## todo do this in more clever way
-	
+		
 	var bullet1position= Vector2( player.global_position.x + 20, player.global_position.y - 30)
 	var bullet2position = Vector2( player.global_position.x - 20, player.global_position.y - 30)
 	bullet1.start(bullet1position, dir)
 	bullet2.start(bullet2position, dir)
-	# TODO if not mutied play bullet sound on start
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -206,29 +205,25 @@ func _process(delta):
 		move_camera(delta, camera_speed)
 
 
-	
 func move_camera(delta, speed):
 	#only move camera in y dir
 	var direction = Vector2(0,-1)
 	$Camera2D.position += direction * (speed * delta)
 
-
 func _on_ScoreTimer_timeout():
 	score += score_increment
 	$Camera2D/HUD/ScoreLabel.text = str(score)
 
-
-	
-	 
 func _game_over():
 
-	## TODO emit a signal that will stop all enemies from scene after x seconds 
-	# or leave it if it wont break everything
-	## TODO  show whole game over screen
 	$ScoreTimer.stop()
 	$Camera2D/HUD/ScoreLabel.hide()
 	$Camera2D/HUD/GameOver.show()
 	$Camera2D/HUD/GameOver.text = 'Game Over\n Score: ' + str(score)
+	
+	$Camera2D/HUD/TouchScreenButtonLeft.visible = false
+	$Camera2D/HUD/TouchScreenButtonRight.visible = false
+	$Camera2D/HUD/TouchScreenButtonShoot.visible = false
 	
 	if score > game.high_score:
 		game.high_score = score
@@ -236,35 +231,16 @@ func _game_over():
 	
 	$Camera2D/HUD/highScore.show()
 	$Music.stop()
-	## TODOD here we play gameover tune
 	
-	
-	
-		## TODO emit a signal that all enemies/environment obj have that will cause them to die
-	#will need to connect that on instantiation, will use queue_free() to dleete
-	## TODO  show whole game over screen
 	$Camera2D/HUD/StartButton.show()
 	$Camera2D/HUD/MenuSprite.visible = true
 	$Camera2D/HUD/StartButton.text = 'Retry'
 	$Camera2D.start(camera_start_position)
 	
-	# TODO time delay on this signal
-	
 	_destroy_all_enemies()
 	$Camera2D/HUD/SpawnManager._stop()
 	
 	$SettingsUpdate.stop()
-	## TODO have gameover screen and show that should be same as start screen, shouldnt just be bg of game
-	
-
-# TODO i need to be rcommented out just for testing
-#func _on_Timer_timeout():
-#	_on_SpawnManager_spawn(PPScene , Vector2(180, -70), {})
-
-
-
-
-
 
 func _on_Music_finished():
 	if has_node('Player') && sound:
@@ -278,7 +254,7 @@ func _on_SettingsUpdate_timeout():
 	## TODO need fully testing
 	rand_generate.randomize()
 	player.speed  = clamp(player.speed + rand_generate.randi_range(10, 30),0, 300)
-	print('speed' + str(player.speed))
+
 	$Camera2D/HUD/SpawnManager.update_spawn_settings(1, 10, 5)
 	rand_generate.randomize()
 	$SettingsUpdate.set_wait_time(rand_generate.randi_range(20, 30))

@@ -6,6 +6,7 @@ export (float) var life_time = 5
 export (String) var dead_animation_name = 'Dead'
 export (PackedScene) var explosion;
 export (String, 'Yes', 'No') var use_explosion = 'No'
+export (String, 'Yes', 'No') var uses_sound = 'No'
 
 var dead = false
 # important when creating new enemies that shoot make sure have enable_shoot flag

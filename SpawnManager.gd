@@ -37,12 +37,12 @@ var rightSpawnPoints = []
 var topSpawnPoints = []
 
 # probability of using top leftr or right
-export (int) var topChance = 60
+export (int) var topChance = 61
 export (int) var leftChance = 19
 export (int) var rightChance = 19
-export (int) var noSpawnChance = 2
-export (int) var dualSpawnChance = 5
-export (int) var tripleSpawnChance = 10
+export (int) var noSpawnChance = 1
+export (int) var dualSpawnChance = 2
+export (int) var tripleSpawnChance = 5
 # Time between each spawn in seconds, will change during game
 var spawnTimerWaitTime = 5
 
@@ -87,8 +87,8 @@ func _start(start_time_between_spawns):
 	
 	$Timer.set_wait_time(start_time_between_spawns)
 	## TODO export vars should be separate and then we update initials here
-	dualSpawnChance = 5
-	tripleSpawnChance = 10
+	dualSpawnChance = 2
+	tripleSpawnChance = 7
 	$Timer.start()
 	
 	
@@ -99,11 +99,6 @@ func update_spawn_settings(timeDecrease, dualChanceincrease, tripleChanceincreas
 	
 	$Timer.set_wait_time(clamp($Timer.wait_time - timeDecrease,1 , 5))
 	$Timer.start()
-	
-	print('Dual Spawn Chance' + str(dualSpawnChance))
-	print('Triple SPawn Change' + str(tripleSpawnChance))
-	print('spawnTimer' + str($Timer.wait_time))
-	## TODO set limit on these
 
 func _stop ():
 	$Timer.stop()

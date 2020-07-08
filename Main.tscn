@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir Caps.ttf" type="DynamicFontData" id=2]
@@ -10,6 +10,12 @@
 [ext_resource path="res://Art/BG/menu.png" type="Texture" id=8]
 [ext_resource path="res://Art/BG/sound_icon.png" type="Texture" id=9]
 [ext_resource path="res://highScore.gd" type="Script" id=10]
+[ext_resource path="res://Art/Buttons/shoot_pressed.png" type="Texture" id=11]
+[ext_resource path="res://Art/Buttons/left_pressed.png" type="Texture" id=12]
+[ext_resource path="res://Art/Buttons/Shoot.png" type="Texture" id=13]
+[ext_resource path="res://Art/Buttons/right.png" type="Texture" id=14]
+[ext_resource path="res://Art/Buttons/right_pressed.png" type="Texture" id=15]
+[ext_resource path="res://Art/Buttons/left.png" type="Texture" id=16]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -29,10 +35,19 @@ font_data = ExtResource( 2 )
 size = 22
 font_data = ExtResource( 5 )
 
+[sub_resource type="CircleShape2D" id=5]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 40.0
+
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
 initial_y_axis_speed = 180
-player_start_position = Vector2( 180, 583 )
+player_start_position = Vector2( 180, 500 )
 score_increment = 25.0
 
 [node name="Camera2D" parent="." instance=ExtResource( 4 )]
@@ -104,6 +119,39 @@ script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TouchScreenButtonLeft" type="TouchScreenButton" parent="Camera2D/HUD"]
+visible = false
+position = Vector2( 2.12134, 538.815 )
+normal = ExtResource( 16 )
+pressed = ExtResource( 12 )
+shape = SubResource( 5 )
+shape_visible = false
+passby_press = true
+action = "ui_left"
+visibility_mode = 1
+
+[node name="TouchScreenButtonRight" type="TouchScreenButton" parent="Camera2D/HUD"]
+visible = false
+position = Vector2( 102.531, 540.229 )
+normal = ExtResource( 14 )
+pressed = ExtResource( 15 )
+shape = SubResource( 6 )
+shape_visible = false
+passby_press = true
+action = "ui_right"
+visibility_mode = 1
+
+[node name="TouchScreenButtonShoot" type="TouchScreenButton" parent="Camera2D/HUD"]
+visible = false
+position = Vector2( 258.801, 537.401 )
+normal = ExtResource( 13 )
+pressed = ExtResource( 11 )
+shape = SubResource( 7 )
+shape_visible = false
+passby_press = true
+action = "ui_select"
+visibility_mode = 1
 
 [node name="ScoreTimer" type="Timer" parent="."]
 wait_time = 1.75

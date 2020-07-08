@@ -54,8 +54,7 @@ func _process(delta):
 	move(delta, rotation_degree)
 	
 func move(delta, rotation_degree):
-	#TODO tidy the code up
-	# TODO test out auto mooveing player to face forward(have a flag on player)
+	
 	#move the player 
 	# move in x axis based on player rotation
 	var direction = Vector2()
@@ -67,7 +66,6 @@ func move(delta, rotation_degree):
 	## no x axis movement when player is going straight
 	## bigger rotation bigger movement
 	# add extra x axis movement so it feels better
-	#TODO adjust and make export variable
 	direction.x = sin(global_rotation) *3
 	
 	# move the player with speed magnitude
@@ -80,9 +78,7 @@ func handle_inputs(delta, rotation_degree):
 	
 	var straightening = false
 
-	# TODO figure out how tp do touch inputs
-	# should be rotate to x axis of touch, further away form
-	# player the bigger rotation accelaration
+
 	var rotation_dir = 0
 	## TODO change to use custom inputz
 	

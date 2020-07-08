@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://EnemyScenes/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Art/enemies/laser_block/laserblock.png" type="Texture" id=2]
 [ext_resource path="res://EnemyScenes/LaserBlock.gd" type="Script" id=3]
 [ext_resource path="res://EnemyScenes/LaserBlockLaser.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Sounds/LaserCharge.wav" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "On"
@@ -42,6 +43,7 @@ position = Vector2( 233.798, 79.848 )
 script = ExtResource( 3 )
 take_damage = "No"
 life_time = 7.0
+uses_sound = "Yes"
 
 [node name="AnimationPlayer" parent="." index="1"]
 anims/On = SubResource( 1 )
@@ -87,3 +89,7 @@ position = Vector2( -0.25, 658.432 )
 
 [node name="Laser12" parent="." index="15" instance=ExtResource( 4 )]
 position = Vector2( -0.25, 722.432 )
+
+[node name="AudioStreamPlayer2D" parent="." index="16"]
+stream = ExtResource( 5 )
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_AudioStreamPlayer2D_finished"]
