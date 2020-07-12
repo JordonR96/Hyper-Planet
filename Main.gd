@@ -50,16 +50,19 @@ var playing
 signal destroy_all_enemies
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	# TODO show start screen stuff
 	$Camera2D/HUD/MuteButton.set_button_icon(soundOnImagePath)
 	playing = false
 	$Camera2D.make_current();
 	screen_size = get_viewport_rect().size
 	_start_backgrounds()
 	$Camera2D/HUD/GameOver.hide()
+	$Camera2D/HUD/JRGame.show()
 	$Camera2D/HUD/TouchScreenButtonLeft.visible = false
 	$Camera2D/HUD/TouchScreenButtonRight.visible = false
 	$Camera2D/HUD/TouchScreenButtonShoot.visible = false
-	
+	$Camera2D/HUD/MenuSprite.visible = true
 
 func _destroy_all_enemies ():
 	## calling this function will remove all enemy and enemy bullets from screen
@@ -106,6 +109,8 @@ func _start_game():
 	$Camera2D/HUD/highScore.hide()
 	$Camera2D/HUD/GameOver.hide()
 	$Camera2D/HUD/GameOver.text = ''
+	$Camera2D/HUD/JRGame.hide()
+	
 	
 	$Camera2D/HUD/TouchScreenButtonLeft.visible = true
 	$Camera2D/HUD/TouchScreenButtonRight.visible = true
@@ -217,10 +222,10 @@ func _on_ScoreTimer_timeout():
 func _game_over():
 
 	$ScoreTimer.stop()
-	$Camera2D/HUD/ScoreLabel.hide()
+	$Camera2D/HUD/ScoreLabel.text = str(score)
 	$Camera2D/HUD/GameOver.show()
-	$Camera2D/HUD/GameOver.text = 'Game Over\n Score: ' + str(score)
-	
+	$Camera2D/HUD/GameOver.text = 'GAME OVER'
+	$Camera2D/HUD/JRGame.show()
 	$Camera2D/HUD/TouchScreenButtonLeft.visible = false
 	$Camera2D/HUD/TouchScreenButtonRight.visible = false
 	$Camera2D/HUD/TouchScreenButtonShoot.visible = false
