@@ -32,8 +32,6 @@ export (int) var bg_tile_resolution = 64
 var playerScene = preload("res://Player.tscn")
 var player
 
-
-# TODO make this customisable so can have diff bullets?
 var PlayerBulletScene = preload('res://PlayerBullet.tscn')
 
 var BackgroundScene = preload("res://Background.tscn")
@@ -95,6 +93,9 @@ func _start_game():
 
 	player = playerScene.instance()
 	add_child(player)
+	player.sound = sound
+	
+	playing = true
 	
 
 	if (sound):
@@ -120,7 +121,7 @@ func _start_game():
 	
 	_start_update_timer()
 	
-	## TODO need to pass in initial spawn settings here
+
 	$Camera2D/HUD/SpawnManager._start(start_time_between_spawns)
 
 	# TODO should be function
@@ -220,7 +221,8 @@ func _on_ScoreTimer_timeout():
 	$Camera2D/HUD/ScoreLabel.text = str(score)
 
 func _game_over():
-
+	
+	playing = false
 	$ScoreTimer.stop()
 	$Camera2D/HUD/ScoreLabel.text = str(score)
 	$Camera2D/HUD/GameOver.show()
@@ -270,10 +272,15 @@ func _on_MuteButton_pressed():
 
 	sound = !sound
 	
+	if (has_node('Player')):
+		player.sound = !player.sound
+	
 	if (sound):
 		$Camera2D/HUD/MuteButton.set_button_icon(soundOnImagePath)
-		$Music.play()
+		if (playing):
+			$Music.play()
 	elif(!sound):
 		$Camera2D/HUD/MuteButton.set_button_icon(soundOffImagePath)
-		$Music.stop()
+		if (playing):
+			$Music.stop()
 	

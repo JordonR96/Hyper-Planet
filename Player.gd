@@ -8,6 +8,7 @@ extends Area2D
 # TODO limit consecutive player shots, maybe have ammo meter
 var screen_size
 var speed 
+var sound
 
 var MainNode
 export var health = 1
@@ -28,6 +29,9 @@ func _ready():
 	
 func get_health():
 	return health
+
+func play_explosion_sound():
+	$ExplosionSound.play()
 	
 func set_health(new_health):
 	health = new_health
@@ -44,6 +48,9 @@ func _process(delta):
 	if (health <= 0 ):
 		$Sprite.visible = false
 		$ExplosionPlayer.play('explosion') 
+		
+		if (sound):
+			play_explosion_sound()
 		speed = 0
 		rotation_speed = 0
 
@@ -80,13 +87,11 @@ func handle_inputs(delta, rotation_degree):
 
 
 	var rotation_dir = 0
-	## TODO change to use custom inputz
 	
 	if (Input.is_action_pressed("ui_select")):
-		## TODO make it so they cant hold button down and shoot
+
 		if (allow_shoot):
-			#TODO if rotated, add smalll extra x position in dir of rotation
-			# when spawning bullet so it still looks like its coming from gun
+		
 			emit_signal('shoot')
 			allow_shoot = false
 			$AnimationPlayer.play('shoot') 
@@ -146,8 +151,6 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 	if (anim_name == 'shoot'):
 		$AnimationPlayer.play('default')
-		#TODO allow shoot is a bit off
-		
 		allow_shoot = true
 
 
