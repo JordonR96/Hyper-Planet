@@ -1,7 +1,6 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://Art/JRGAME.png" type="Texture" id=2]
 [ext_resource path="res://SpawnManager.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Camera2D.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Font/pixel_noir/Pixel-Noir.ttf" type="DynamicFontData" id=5]
@@ -83,7 +82,6 @@ __meta__ = {
 visible = false
 position = Vector2( 180, 320 )
 z_index = 10
-texture = ExtResource( 2 )
 
 [node name="Timer" type="Timer" parent="Camera2D/StartScreen"]
 wait_time = 4.0
