@@ -8,3 +8,7 @@ func _ready():
 		
 	rand_generate.randomize()
 	rotation_degrees = rand_generate.randi_range(-70, 70)
+
+
+func _on_destroy_all_enemies():
+	queue_free()

@@ -28,7 +28,7 @@ func _ready():
 	pass # Replace with function body.
 
 
-## TODO need connecting signal from main that when called will just que free
+
 func _on_destroy_all_enemies():
 	queue_free()
 
