@@ -94,8 +94,8 @@ func _start(start_time_between_spawns):
 	
 func update_spawn_settings(timeDecrease, dualChanceincrease, tripleChanceincrease):
 	$Timer.stop()
-	dualSpawnChance = clamp(dualSpawnChance + dualChanceincrease, 0, 90) 
-	tripleSpawnChance =  clamp(tripleSpawnChance + tripleChanceincrease, 0, 90) 
+	dualSpawnChance = clamp(dualSpawnChance + dualChanceincrease, 0, 40) 
+	tripleSpawnChance =  clamp(tripleSpawnChance + tripleChanceincrease, 0, 20) 
 	
 	$Timer.set_wait_time(clamp($Timer.wait_time - timeDecrease,1 , 5))
 	$Timer.start()
@@ -117,10 +117,8 @@ func _spawn():
 	var spawnPosition 
 	var spawnConfig = {}
 	var spawnType
-	## TODO calc i fdouble spawning then triples spawning and do that in a way that works
 	
 	if (spawnState == 'Master'):
-		
 		
 		
 		# choose spanw position
@@ -234,24 +232,29 @@ func _spawn():
 					dualSpawnPosition =  Vector2(spawnPosition.x + rand_generate.randi_range(60, 160), spawnPosition.y )
 		
 				emit_signal("spawn", enemyToSpawn[0], dualSpawnPosition, spawnType)
-				var tripleSpawn = false
-				# choose spanw position
-				rand_generate.randomize()
-				var tripleSpawnRandomNumber = rand_generate.randi_range(0, 100)
 				
-				if (tripleSpawnRandomNumber <= tripleSpawnChance):
+			
+#				var tripleSpawn = false
+#				# choose spanw position
+#				rand_generate.randomize()
+#				var tripleSpawnRandomNumber = rand_generate.randi_range(0, 100)
+#
+#				if (tripleSpawnRandomNumber <= tripleSpawnChance):
+#
+#					rand_generate.randomize()
+#					var tripleSpawnPosition
+#					if (spawnType == 'Left' or spawnType == 'Right'):
+#
+#						tripleSpawnPosition=  Vector2(spawnPosition.x, spawnPosition.y - rand_generate.randi_range(60, 160) )
+#
+#					elif(spawnType == 'Top'):
+#
+#						tripleSpawnPosition =  Vector2(spawnPosition.x + rand_generate.randi_range(60, 160), spawnPosition.y )
+#
+#					emit_signal("spawn", enemyToSpawn[0], tripleSpawnPosition ,spawnType)
 					
-					rand_generate.randomize()
-					var tripleSpawnPosition
-					if (spawnType == 'Left' or spawnType == 'Right'):
-						
-						tripleSpawnPosition=  Vector2(spawnPosition.x, spawnPosition.y - rand_generate.randi_range(60, 160) )
-						
-					elif(spawnType == 'Top'):
-						
-						tripleSpawnPosition =  Vector2(spawnPosition.x + rand_generate.randi_range(60, 160), spawnPosition.y )
-						
-					emit_signal("spawn", enemyToSpawn[0], tripleSpawnPosition ,spawnType)
+					
+					
 				
 		
 		# spawn connecting function in main

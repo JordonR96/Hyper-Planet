@@ -262,7 +262,7 @@ func _on_SettingsUpdate_timeout():
 	rand_generate.randomize()
 	player.speed  = clamp(player.speed + rand_generate.randi_range(10, 30),0, 300)
 
-	$Camera2D/HUD/SpawnManager.update_spawn_settings(1, 10, 5)
+	$Camera2D/HUD/SpawnManager.update_spawn_settings(1, 2, 2)
 	rand_generate.randomize()
 	$SettingsUpdate.set_wait_time(rand_generate.randi_range(20, 30))
 	$SettingsUpdate.start()
