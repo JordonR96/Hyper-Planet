@@ -12,7 +12,7 @@ export(Vector2) var player_start_position
 export(Vector2) var camera_start_position
 
 export(float) var score_increment
-export(int) var start_time_between_spawns =2
+export(int) var start_time_between_spawns = 3
 
 var score = 0;
 
@@ -156,7 +156,7 @@ func _on_SpawnManager_spawn(EnemyScene, spawnPosition, spawnType):
 	
 	if (enemy.has_method('set_target')):
 		enemy.set_target(player)
-	
+
 	add_child(enemy)
 	
 func _spawn_enemy_bullet(BulletScene, position, direction):
@@ -260,7 +260,7 @@ func _start_update_timer():
 func _on_SettingsUpdate_timeout():
 	## TODO need fully testing
 	rand_generate.randomize()
-	player.speed  = clamp(player.speed + rand_generate.randi_range(10, 30),0, 300)
+	player.speed  = clamp(player.speed + rand_generate.randi_range(10, 20),0, 300)
 
 	$Camera2D/HUD/SpawnManager.update_spawn_settings(1, 2, 2)
 	rand_generate.randomize()

@@ -74,19 +74,16 @@ func _start(start_time_between_spawns):
 	rightActiveList = rightMasterList
 
 	topActiveList = topMasterList
-	
-	 ## TODO reduce range of values for spawns so its centre of screen
 
 	for i in range(100,300):
 		topSpawnPoints.append(Vector2(i,-200))
 	
-	# TODO reuce ranmge of these so they sopawn in top half of screen
 	for i in range(-200, 0):
 		rightSpawnPoints.append(Vector2(360, i))
 		leftSpawnPoints.append(Vector2(-20, i))
 	
 	$Timer.set_wait_time(start_time_between_spawns)
-	## TODO export vars should be separate and then we update initials here
+
 	dualSpawnChance = 2
 	tripleSpawnChance = 7
 	$Timer.start()
@@ -97,7 +94,7 @@ func update_spawn_settings(timeDecrease, dualChanceincrease, tripleChanceincreas
 	dualSpawnChance = clamp(dualSpawnChance + dualChanceincrease, 0, 40) 
 	tripleSpawnChance =  clamp(tripleSpawnChance + tripleChanceincrease, 0, 20) 
 	
-	$Timer.set_wait_time(clamp($Timer.wait_time - timeDecrease,1 , 5))
+	$Timer.set_wait_time(clamp($Timer.wait_time - timeDecrease,2 , 5))
 	$Timer.start()
 
 func _stop ():

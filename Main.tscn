@@ -52,7 +52,7 @@ radius = 40.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
-initial_y_axis_speed = 180
+initial_y_axis_speed = 220
 player_start_position = Vector2( 180, 500 )
 score_increment = 25.0
 

@@ -28,7 +28,7 @@ tracks/0/keys = {
 [node name="Enemy" instance=ExtResource( 1 )]
 position = Vector2( 0, 0 )
 script = ExtResource( 2 )
-speed = 150
+speed = 140
 explosion = ExtResource( 3 )
 use_explosion = "Yes"
 rotation_speed = 45
