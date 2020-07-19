@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Art/player/spaceship.png" type="Texture" id=1]
 [ext_resource path="res://Art/player/ship_explosion.png" type="Texture" id=2]
-[ext_resource path="res://Sounds/Explosion2.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sounds/PlayerExplosion.wav" type="AudioStream" id=3]
 [ext_resource path="res://Player.gd" type="Script" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -98,7 +98,7 @@ __meta__ = {
 }
 auto_straighten = true
 rotation_speed = 2.0
-rotation_limit = 15
+rotation_limit = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.54078e-05, -0.176729 )
@@ -117,7 +117,6 @@ z_index = 1
 texture = ExtResource( 2 )
 vframes = 3
 hframes = 4
-frame = 11
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, 0.25 )
@@ -129,8 +128,11 @@ hframes = 2
 anims/explosion = SubResource( 6 )
 anims/none = SubResource( 7 )
 
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
+
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
+volume_db = -0.705
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="ExplosionPlayer" to="." method="_on_ExplosionPlayer_animation_finished"]

@@ -5,6 +5,7 @@ extends Node2D
 var rand_generate = RandomNumberGenerator.new()
 
 export(int, 1000) var initial_y_axis_speed
+export(int, 1000) var initial_distance_between_spawns
 
 
 
@@ -49,7 +50,8 @@ signal destroy_all_enemies
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	# TODO show start screen stuff
+
+
 	$Camera2D/HUD/MuteButton.set_button_icon(soundOnImagePath)
 	playing = false
 	$Camera2D.make_current();
@@ -122,7 +124,7 @@ func _start_game():
 	_start_update_timer()
 	
 
-	$Camera2D/HUD/SpawnManager._start(start_time_between_spawns)
+	$Camera2D/HUD/SpawnManager._start(initial_y_axis_speed, initial_distance_between_spawns)
 
 	# TODO should be function
 	player.start(player_start_position)
@@ -138,7 +140,6 @@ func _start_game():
 func _on_SpawnManager_spawn(EnemyScene, spawnPosition, spawnType):
 
 	# spawn type is top left or right
-	
 	var enemy = EnemyScene.instance()
 	spawnPosition.x = spawnPosition.x + $Camera2D.position.x
 	spawnPosition.y = spawnPosition.y + $Camera2D.position.y
@@ -258,13 +259,14 @@ func _start_update_timer():
 	$SettingsUpdate.start()
 	
 func _on_SettingsUpdate_timeout():
-	## TODO need fully testing
-	rand_generate.randomize()
-	player.speed  = clamp(player.speed + rand_generate.randi_range(10, 20),0, 300)
 
-	$Camera2D/HUD/SpawnManager.update_spawn_settings(1, 2, 2)
 	rand_generate.randomize()
-	$SettingsUpdate.set_wait_time(rand_generate.randi_range(20, 30))
+	player.speed  = clamp(player.speed + rand_generate.randi_range(10, 20),0, 400)
+	rand_generate.randomize()
+	var distanceBetweenSpawns = rand_generate.randi_range(400, 700)
+	$Camera2D/HUD/SpawnManager.update_spawn_settings(distanceBetweenSpawns, player.speed, 2, 2)
+	rand_generate.randomize()
+	$SettingsUpdate.set_wait_time(rand_generate.randi_range(10, 30))
 	$SettingsUpdate.start()
 
 func _on_MuteButton_pressed():

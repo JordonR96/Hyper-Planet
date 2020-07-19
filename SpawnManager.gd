@@ -67,7 +67,7 @@ signal spawn
 func _ready():
 	pass
 # Called when the node enters the scene tree for the first time.
-func _start(start_time_between_spawns):
+func _start(initial_y_axis_speed, initial_distance_between_spawns):
 	screen_size = get_viewport_rect().size
 	
 	leftActiveList = leftMasterList
@@ -81,20 +81,24 @@ func _start(start_time_between_spawns):
 	for i in range(-200, 0):
 		rightSpawnPoints.append(Vector2(360, i))
 		leftSpawnPoints.append(Vector2(-20, i))
+		
+	var spawnTimerWaitTime = initial_distance_between_spawns/initial_y_axis_speed
 	
-	$Timer.set_wait_time(start_time_between_spawns)
+	$Timer.set_wait_time(spawnTimerWaitTime)
 
 	dualSpawnChance = 2
 	tripleSpawnChance = 7
 	$Timer.start()
 	
 	
-func update_spawn_settings(timeDecrease, dualChanceincrease, tripleChanceincrease):
+func update_spawn_settings(distanceBetweenSpawns, playerSpeed, dualChanceincrease, tripleChanceincrease):
 	$Timer.stop()
 	dualSpawnChance = clamp(dualSpawnChance + dualChanceincrease, 0, 40) 
 	tripleSpawnChance =  clamp(tripleSpawnChance + tripleChanceincrease, 0, 20) 
 	
-	$Timer.set_wait_time(clamp($Timer.wait_time - timeDecrease,2 , 5))
+	var newSpawnWaitTime = distanceBetweenSpawns/playerSpeed
+	
+	$Timer.set_wait_time(newSpawnWaitTime)
 	$Timer.start()
 
 func _stop ():

@@ -30,8 +30,8 @@ func _ready():
 func get_health():
 	return health
 
-func play_explosion_sound():
-	$ExplosionSound.play()
+
+	
 	
 func set_health(new_health):
 	health = new_health
@@ -47,10 +47,11 @@ func _process(delta):
 	
 	if (health <= 0 ):
 		$Sprite.visible = false
+		if (sound):
+			$ExplosionSound.play()
 		$ExplosionPlayer.play('explosion') 
 		
-		if (sound):
-			play_explosion_sound()
+	
 		speed = 0
 		rotation_speed = 0
 
@@ -108,15 +109,11 @@ func handle_inputs(delta, rotation_degree):
 		rotation_dir += 1
 	else:
 		if (auto_straighten and rotation_degree != 0):
-			#TODO set rotation direction towards
+
 			rotation_dir = -1 * (rotation_degree/abs(rotation_degree))
 			straightening = true
 			## todo consider snapback rotation quicker
 	
-	
-
-	## TODO acceleration rotation/ rotation speed change with distrance touch
-	# away from play/ touch screen left/right + shoot
 		
 	var rotation_change = rotation_dir * rotation_speed * delta
 	
@@ -138,9 +135,6 @@ func take_damage(amount):
 	health = health - amount
 
 
-
-
-
 func _on_Player_area_entered(area):
 
 	if (area.has_method('take_damage')):
@@ -156,5 +150,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 
 func _on_ExplosionPlayer_animation_finished(anim_name):
-	queue_free()
+	if (sound):
+		$ExplosionSound.stop()
 	emit_signal('game_over')
+	queue_free()

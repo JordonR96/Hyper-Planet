@@ -53,6 +53,7 @@ radius = 40.0
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
 initial_y_axis_speed = 220
+initial_distance_between_spawns = 600
 player_start_position = Vector2( 180, 500 )
 score_increment = 25.0
 
@@ -135,10 +136,10 @@ __meta__ = {
 [node name="GameOver" type="Label" parent="Camera2D/HUD"]
 anchor_top = -0.00110483
 anchor_bottom = -0.00110483
-margin_left = 4.43777
-margin_top = 455.779
-margin_right = 361.438
-margin_bottom = 626.779
+margin_left = 3.73065
+margin_top = 475.578
+margin_right = 360.731
+margin_bottom = 646.578
 custom_fonts/font = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -162,10 +163,10 @@ __meta__ = {
 }
 
 [node name="highScore" type="Label" parent="Camera2D/HUD"]
-margin_left = 5.65689
-margin_top = 337.998
-margin_right = 335.657
-margin_bottom = 351.998
+margin_left = 2.82846
+margin_top = 107.481
+margin_right = 332.829
+margin_bottom = 142.481
 custom_fonts/font = SubResource( 5 )
 script = ExtResource( 10 )
 __meta__ = {
