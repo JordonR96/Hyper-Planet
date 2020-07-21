@@ -232,11 +232,7 @@ func _game_over():
 	$Camera2D/HUD/TouchScreenButtonLeft.visible = false
 	$Camera2D/HUD/TouchScreenButtonRight.visible = false
 	$Camera2D/HUD/TouchScreenButtonShoot.visible = false
-	
-	if score > game.high_score:
-		game.high_score = score
-		$Camera2D/HUD/highScore.reload()
-	
+		
 	$Camera2D/HUD/highScore.show()
 	$Music.stop()
 	
@@ -244,12 +240,13 @@ func _game_over():
 	$Camera2D/HUD/MenuSprite.visible = true
 	$Camera2D/HUD/StartButton.text = 'Retry'
 	$Camera2D.start(camera_start_position)
-	
-	_destroy_all_enemies()
 	$Camera2D/HUD/SpawnManager._stop()
-	
 	$SettingsUpdate.stop()
-
+	_destroy_all_enemies()
+	
+	if score > game.high_score:
+		game.high_score = score
+		$Camera2D/HUD/highScore.reload()
 func _on_Music_finished():
 	if has_node('Player') && sound:
 		$Music.play()
