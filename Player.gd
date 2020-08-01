@@ -46,10 +46,13 @@ func start(pos):
 func _process(delta):
 	
 	if (health <= 0 ):
-		$Sprite.visible = false
-		if (sound):
+		if (sound && !$ExplosionSound.playing ):
 			$ExplosionSound.play()
+		$Sprite.visible = false
+		
+	
 		$ExplosionPlayer.play('explosion') 
+		
 		
 	
 		speed = 0
@@ -150,7 +153,6 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 
 func _on_ExplosionPlayer_animation_finished(anim_name):
-	if (sound):
-		$ExplosionSound.stop()
+
 	emit_signal('game_over')
 	queue_free()

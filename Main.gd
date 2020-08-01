@@ -234,7 +234,10 @@ func _game_over():
 	$Camera2D/HUD/TouchScreenButtonShoot.visible = false
 		
 	$Camera2D/HUD/highScore.show()
-	$Music.stop()
+	
+	if sound:
+		$Music.stop()
+		$GameOverSound.play()
 	
 	$Camera2D/HUD/StartButton.show()
 	$Camera2D/HUD/MenuSprite.visible = true

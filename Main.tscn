@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Art/JRGAME.png" type="Texture" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Art/Buttons/right.png" type="Texture" id=14]
 [ext_resource path="res://Art/Buttons/right_pressed.png" type="Texture" id=15]
 [ext_resource path="res://Art/Buttons/left.png" type="Texture" id=16]
+[ext_resource path="res://Music/GameOver.wav" type="AudioStream" id=17]
 
 [sub_resource type="DynamicFont" id=1]
 size = 12
@@ -217,6 +218,9 @@ position = Vector2( 180, 320 )
 
 [node name="SettingsUpdate" type="Timer" parent="."]
 one_shot = true
+
+[node name="GameOverSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 17 )
 [connection signal="timeout" from="Camera2D/StartScreen/Timer" to="." method="_on_Timer_timeout"]
 [connection signal="spawn" from="Camera2D/HUD/SpawnManager" to="." method="_on_SpawnManager_spawn"]
 [connection signal="pressed" from="Camera2D/HUD/StartButton" to="." method="_start_game"]
