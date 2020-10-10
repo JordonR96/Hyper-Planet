@@ -116,16 +116,12 @@ __meta__ = {
 }
 
 [node name="JRGame" type="Label" parent="Camera2D/HUD"]
-margin_left = 4.06589
-margin_top = 582.479
-margin_right = 355.066
-margin_bottom = 633.479
+margin_left = 8.0
+margin_top = 595.0
+margin_right = 355.0
+margin_bottom = 634.0
 custom_fonts/font = SubResource( 1 )
 text = "Feedback
-
-
-
-Twitter: @JordonRowley96
 
 
 

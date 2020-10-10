@@ -48,12 +48,10 @@ func _process(delta):
 	if (health <= 0 ):
 		if (sound && !$ExplosionSound.playing ):
 			$ExplosionSound.play()
+			
 		$Sprite.visible = false
-		
 	
 		$ExplosionPlayer.play('explosion') 
-		
-		
 	
 		speed = 0
 		rotation_speed = 0

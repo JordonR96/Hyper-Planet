@@ -6,8 +6,6 @@ var active = true
 
 export (int) var total_frames
 
-## todo make selecting a frame a function, give high chance of showing just plain desert
-
 
 func start( start_position):
 	
